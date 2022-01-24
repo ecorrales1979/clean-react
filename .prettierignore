@@ -1,0 +1,7 @@
+**/*.min.js
+**/*.min.css
+
+.vscode/
+node_modules/
+dist/
+build/
