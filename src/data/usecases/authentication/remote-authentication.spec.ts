@@ -4,8 +4,8 @@ import RemoteAuthentication from './remote-authentication'
 import { HttpPostClientSpy } from '@/data/mocks/mock-http-client'
 import { HttpStatusCode } from '@/data/protocols/http/http-response'
 import { mockAuthentication } from '@/domain/mocks/mock-authentication'
-import { InvalidCredentialsError } from '@/domain/errors/InvalidCredentialsError'
-import { UnexpectedError } from '@/domain/errors/UnexpectedError'
+import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
+import { UnexpectedError } from '@/domain/errors/unexpected-error'
 
 interface SutTypes {
   sut: RemoteAuthentication
