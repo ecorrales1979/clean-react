@@ -32,6 +32,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "git-commit-msg-linter": "^4.0.7",
     "husky": "^7.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.7",
     "lint-staged": "^12.3.1",
     "node-sass": "^7.0.1",
