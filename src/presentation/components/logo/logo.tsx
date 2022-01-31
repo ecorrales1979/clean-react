@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const Logo: React.FC = () => (
   <svg width="120px" height="87px" viewBox="0 0 120 87" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -13,4 +13,4 @@ const Logo: React.FC = () => (
   </svg>
 )
 
-export default Logo
+export default memo(Logo)
