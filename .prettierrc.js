@@ -3,8 +3,8 @@ module.exports = {
   tabWidth: 2,
   semi: false,
   singleQuote: true,
-  jsxSingleQuote: true,
-  trailingComma: 'avoid',
+  jsxSingleQuote: false,
+  trailingComma: 'none',
   arrowParens: 'avoid',
   htmlWhitespaceSensitivity: 'css',
 }
