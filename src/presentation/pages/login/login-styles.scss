@@ -1,0 +1,123 @@
+$background: #f2f2f2;
+$light: #fff;
+$dark: #000;
+$primary: #880E4F;
+$primaryLight: #BC477B;
+$primaryDark: #560027;
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $background;
+}
+
+input[type="email"],
+input[type="password"] {
+  border: 1px solid $primaryLight;
+  line-height: 40px;
+  border-radius: 4px;
+  padding: 0 30px 0 8px;
+
+  &:focus {
+    outline-color: $primaryLight;
+  }
+}
+
+button {
+  background-color: $primary;
+  color: $light;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 60px;
+  border: 0;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+
+  .header {
+    background: $primary;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    border-top: 40px solid $primaryDark;
+    
+    h1 {
+      color: $light;
+      margin-top: 16px;
+    }
+  }
+
+  .form {
+    background-color: $light;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    align-self: center;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px -1px $dark;
+
+    h2 {
+      color: $primaryDark;
+      font-size: 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    
+    .input-wrap {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      // flex: 1;
+      position: relative;
+  
+      input {
+        flex-grow: 1;
+      }
+
+      .input-status {
+        position: absolute;
+        right: 8px;
+        font-size: 12px;
+        cursor: help;
+      }
+    }
+
+    .btn-submit {
+      margin-top: 32px;
+    }
+
+    .link {
+      text-align: center;
+      color: $primary;
+      text-transform: lowercase;
+      margin-top: 16px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footer {
+    background-color: $primary;
+    height: 48px;
+  }
+}
