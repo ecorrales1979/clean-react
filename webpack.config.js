@@ -21,11 +21,11 @@ module.exports = {
       loader: 'ts-loader',
       exclude: /node_modules/
     }, {
-      test: /\.(scss|css)$/,
+      test: /\.s[ac]ss$/i,
       use: [
-        { loader: 'sass-loader' },
-        { loader: 'css-loader', options: { modules: true } },
-        { loader: 'style-loader' }
+        "style-loader", // Creates `style` nodes from JS strings
+        "css-loader", // Translates CSS into CommonJS
+        "sass-loader", // Compiles Sass to CSS
       ],
       exclude: /node_modules/
     }]
