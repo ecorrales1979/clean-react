@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "webpack-dev-server --open",
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "yarn test -- --watch",
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test -- --coverage",
