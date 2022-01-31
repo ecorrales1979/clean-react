@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import './login-footer-styles.scss'
+import './footer-styles.scss'
 
 const Footer: React.FC = () => (
   <footer className="footer" />
