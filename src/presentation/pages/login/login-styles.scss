@@ -43,20 +43,6 @@ button {
   justify-content: space-between;
   height: 100vh;
 
-  .header {
-    background: $primary;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    border-top: 40px solid $primaryDark;
-    
-    h1 {
-      color: $light;
-      margin-top: 16px;
-    }
-  }
-
   .form {
     background-color: $light;
     display: flex;
