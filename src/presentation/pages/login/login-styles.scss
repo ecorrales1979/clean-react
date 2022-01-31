@@ -1,10 +1,4 @@
-$background: #f2f2f2;
-$light: #fff;
-$dark: #000;
-$primary: #880E4F;
-$primaryLight: #BC477B;
-$primaryDark: #560027;
-
+@import '../../styles/colors.scss';
 
 * {
   margin: 0;
@@ -112,6 +106,23 @@ button {
 
       &:hover {
         text-decoration: underline;
+      }
+    }
+
+    .loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .spinner {
+        // display: none;
+        margin-top: 30px;
+      }
+
+      .error-msg {
+        // display: none;
+        margin-top: 30px;
+        color: $primaryLight;
       }
     }
   }
