@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 
 import './login-header-styles.scss'
-import Logo from '@/presentation/components/logo/logo'
+import { Logo } from '@/presentation/components'
 
 const LoginHeader: React.FC = () => (
   <header className="header">

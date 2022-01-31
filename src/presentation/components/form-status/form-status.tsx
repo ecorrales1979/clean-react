@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './form-status-styles.scss'
-import Spinner from '@/presentation/components/spinner/spinner'
+import { Spinner } from '@/presentation/components'
 
 interface Props {
   errorMsg: string
