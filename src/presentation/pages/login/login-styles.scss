@@ -60,25 +60,6 @@ button {
       text-transform: uppercase;
     }
     
-    .input-wrap {
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-      // flex: 1;
-      position: relative;
-  
-      input {
-        flex-grow: 1;
-      }
-
-      .input-status {
-        position: absolute;
-        right: 8px;
-        font-size: 12px;
-        cursor: help;
-      }
-    }
-
     .btn-submit {
       margin-top: 32px;
     }
