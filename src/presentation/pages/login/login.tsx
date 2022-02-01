@@ -12,12 +12,16 @@ import { FormContext } from '@/presentation/contexts'
 interface StatusProps {
   isLoading: boolean
   errorMessage: string
+  emailError: string
+  passwordError: string
 }
 
 const Login: React.FC = () => {
   const [state] = useState<StatusProps>({
     isLoading: false,
-    errorMessage: ''
+    errorMessage: '',
+    emailError: 'Campo obrigatório',
+    passwordError: 'Campo obrigatório'
   })
 
   return (
