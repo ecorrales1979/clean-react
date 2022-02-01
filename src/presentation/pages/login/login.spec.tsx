@@ -8,5 +8,7 @@ describe('Login page', () => {
     const { getByTestId } = render(<Login />)
     const loadingWrap = getByTestId('loading-wrap')
     expect(loadingWrap.childElementCount).toBe(0)
+    const submitBtn = getByTestId('submit') as HTMLButtonElement
+    expect(submitBtn.disabled).toBe(true)
   })
 })
