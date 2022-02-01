@@ -8,10 +8,10 @@ interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLIn
 }
 
 const Input: React.FC<Props> = (props) => {
-  const context = useContext(FormContext)
+  const { errorState } = useContext(FormContext)
 
   const getTitle = (): string => {
-    return context[`${props.name}Error`]
+    return errorState[props.name]
   }
 
   const getStatus = (): string => {

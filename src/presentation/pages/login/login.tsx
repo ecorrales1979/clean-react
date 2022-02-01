@@ -12,22 +12,23 @@ import { FormContext } from '@/presentation/contexts'
 interface StatusProps {
   isLoading: boolean
   errorMessage: string
-  emailError: string
-  passwordError: string
 }
 
 const Login: React.FC = () => {
-  const [state] = useState<StatusProps>({
+  const [submitState] = useState<StatusProps>({
     isLoading: false,
-    errorMessage: '',
-    emailError: 'Campo obrigatório',
-    passwordError: 'Campo obrigatório'
+    errorMessage: ''
+  })
+
+  const [errorState] = useState({
+    email: 'Campo obrigatório',
+    password: 'Campo obrigatório'
   })
 
   return (
     <div className="login">
       <Header />
-      <FormContext.Provider value={state}>
+      <FormContext.Provider value={{ submitState, errorState }}>
         <form className="form">
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
