@@ -8,10 +8,11 @@ interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLIn
 }
 
 const Input: React.FC<Props> = (props) => {
-  const { errorState } = useContext(FormContext)
+  const { state, setState } = useContext(FormContext)
+  const error = state[`${props.name}Error`]
 
   const getTitle = (): string => {
-    return errorState[props.name]
+    return error
   }
 
   const getStatus = (): string => {
@@ -22,9 +23,16 @@ const Input: React.FC<Props> = (props) => {
     ev.target.readOnly = false
   }
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setState((prevState: object) => ({
+      ...prevState,
+      [event.target.name]: event.target.value
+    }))
+  }
+
   return (
     <div className="input-wrap">
-      <input {...props} readOnly onFocus={enableInput} />
+      <input {...props} readOnly onFocus={enableInput} data-testid={props.name} onChange={handleChange} />
       <span title={getTitle()} data-testid={`${props.name}-status`} className="input-status">{getStatus()}</span>
     </div>
   )
