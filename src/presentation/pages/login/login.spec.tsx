@@ -1,5 +1,6 @@
 import React from 'react'
 import { cleanup, fireEvent, render, RenderResult } from '@testing-library/react'
+import faker from '@faker-js/faker'
 
 import Login from './login'
 import { ValidationSpy } from '@/presentation/mocks'
@@ -37,7 +38,7 @@ describe('Login page', () => {
   })
 
   it('Should call validation with correct email value', () => {
-    const emailValue = 'any_email'
+    const emailValue = faker.internet.email()
     const { sut, validationSpy } = makeSut()
     const emailInput = sut.getByTestId('email')
     fireEvent.input(emailInput, { target: { value: emailValue } })
@@ -46,7 +47,7 @@ describe('Login page', () => {
   })
 
   it('Should call validation with correct password value', () => {
-    const passwordValue = 'any_password'
+    const passwordValue = faker.internet.password()
     const { sut, validationSpy } = makeSut()
     const passwordInput = sut.getByTestId('password')
     fireEvent.input(passwordInput, { target: { value: passwordValue } })
