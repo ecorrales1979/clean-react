@@ -12,11 +12,11 @@ const Input: React.FC<Props> = (props) => {
   const error = state[`${props.name}Error`]
 
   const getTitle = (): string => {
-    return error
+    return error || 'Tudo certo'
   }
 
   const getStatus = (): string => {
-    return '🔴'
+    return error ? '🔴' : '🔵'
   }
 
   const enableInput = (ev: React.FocusEvent<HTMLInputElement>): void => {
