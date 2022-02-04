@@ -34,7 +34,7 @@ describe('Login page', () => {
     expect(emailStatus.title).toBe(validationSpy.errorMessage)
     expect(emailStatus.textContent).toBe('🔴')
     const passwordStatus = sut.getByTestId('password-status')
-    expect(passwordStatus.title).toBe('Campo obrigatório')
+    expect(passwordStatus.title).toBe(validationSpy.errorMessage)
     expect(passwordStatus.textContent).toBe('🔴')
   })
 
@@ -63,5 +63,14 @@ describe('Login page', () => {
     const emailStatus = sut.getByTestId('email-status')
     expect(emailStatus.title).toBe(validationSpy.errorMessage)
     expect(emailStatus.textContent).toBe('🔴')
+  })
+
+  it('Should show password error if Validation fails', () => {
+    const { sut, validationSpy } = makeSut()
+    const passwordInput = sut.getByTestId('password')
+    fireEvent.input(passwordInput, { target: { value: '' } })
+    const passwordStatus = sut.getByTestId('password-status')
+    expect(passwordStatus.title).toBe(validationSpy.errorMessage)
+    expect(passwordStatus.textContent).toBe('🔴')
   })
 })
