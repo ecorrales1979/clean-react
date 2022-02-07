@@ -8,7 +8,7 @@ const spinner: React.FC<Props> = (props) => {
   const styles = ['lds-ellipsis', props.className].join(' ')
 
   return (
-    <div className={styles}>
+    <div {...props} data-testid="spinner" className={styles}>
       <div />
       <div />
       <div />
