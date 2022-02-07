@@ -45,6 +45,12 @@ const simulateValidSubmit = (sut: RenderResult, email = faker.internet.email(), 
   fireEvent.click(submitBtn)
 }
 
+const simulateStatusForField = (sut: RenderResult, fieldName: string, validationError?: string): void => {
+  const fieldStatus = sut.getByTestId(`${fieldName}-status`)
+  expect(fieldStatus.title).toBe(validationError ?? 'Tudo certo')
+  expect(fieldStatus.textContent).toBe(validationError ? '🔴' : '🔵')
+}
+
 describe('Login page', () => {
   afterEach(cleanup)
 
@@ -55,12 +61,8 @@ describe('Login page', () => {
     expect(loadingWrap.childElementCount).toBe(0)
     const submitBtn = sut.getByTestId('submit') as HTMLButtonElement
     expect(submitBtn.disabled).toBe(true)
-    const emailStatus = sut.getByTestId('email-status')
-    expect(emailStatus.title).toBe(validationError)
-    expect(emailStatus.textContent).toBe('🔴')
-    const passwordStatus = sut.getByTestId('password-status')
-    expect(passwordStatus.title).toBe(validationError)
-    expect(passwordStatus.textContent).toBe('🔴')
+    simulateStatusForField(sut, 'email', validationError)
+    simulateStatusForField(sut, 'password', validationError)
   })
 
   it('Should call validation with correct email value', () => {
@@ -83,34 +85,26 @@ describe('Login page', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     populateEmailField(sut, '')
-    const emailStatus = sut.getByTestId('email-status')
-    expect(emailStatus.title).toBe(validationError)
-    expect(emailStatus.textContent).toBe('🔴')
+    simulateStatusForField(sut, 'email', validationError)
   })
 
   it('Should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     populatePasswordField(sut, '')
-    const passwordStatus = sut.getByTestId('password-status')
-    expect(passwordStatus.title).toBe(validationError)
-    expect(passwordStatus.textContent).toBe('🔴')
+    simulateStatusForField(sut, 'password', validationError)
   })
 
   it('Should show valid email state if Validation succeeds', () => {
     const { sut } = makeSut()
     populateEmailField(sut)
-    const emailStatus = sut.getByTestId('email-status')
-    expect(emailStatus.title).toBe('Tudo certo')
-    expect(emailStatus.textContent).toBe('🔵')
+    simulateStatusForField(sut, 'email')
   })
 
   it('Should show valid password state if Validation succeeds', () => {
     const { sut } = makeSut()
     populatePasswordField(sut)
-    const passwordStatus = sut.getByTestId('password-status')
-    expect(passwordStatus.title).toBe('Tudo certo')
-    expect(passwordStatus.textContent).toBe('🔵')
+    simulateStatusForField(sut, 'password')
   })
 
   it('should enable submit button if form is valid', () => {
