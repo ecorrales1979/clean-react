@@ -93,4 +93,15 @@ describe('Login page', () => {
     expect(passwordStatus.title).toBe('Tudo certo')
     expect(passwordStatus.textContent).toBe('🔵')
   })
+
+  it('should enable submit button if form is valid', () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.errorMessage = ''
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
+    const passwordInput = sut.getByTestId('password')
+    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+    const submitBtn = sut.getByTestId('submit') as HTMLButtonElement
+    expect(submitBtn.disabled).toBe(false)
+  })
 })
