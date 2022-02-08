@@ -57,7 +57,7 @@ const Login: React.FC<Props> = ({ authentication, validation }) => {
           <button
             type="submit"
             data-testid="submit"
-            disabled={!!state.emailError || !!state.passwordError}
+            disabled={!!state.emailError || !!state.passwordError || state.isLoading}
             className="btn-submit"
           >
             Entrar
