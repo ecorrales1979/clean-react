@@ -10,6 +10,7 @@ import {
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication } from '@/domain/usecases/authentication'
+import { InvalidCredentialsError } from '@/domain/errors'
 
 interface Props {
   validation: Validation
@@ -43,8 +44,20 @@ const Login: React.FC<Props> = ({ authentication, validation }) => {
   const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>): Promise<void> => {
     ev.preventDefault()
     if (state.isLoading || state.emailError || state.passwordError) return
-    setState((oldState) => ({ ...oldState, isLoading: true }))
-    await authentication.auth({ email: state.email, password: state.password })
+    try {
+      setState((oldState) => ({ ...oldState, isLoading: true }))
+      await authentication.auth({ email: state.email, password: state.password })
+    } catch (error: unknown) {
+      let errorMsg = 'Erro de autenticação'
+      if (error instanceof InvalidCredentialsError) {
+        errorMsg = error.message
+      }
+      setState(oldState => ({
+        ...oldState,
+        isLoading: false,
+        mainError: errorMsg
+      }))
+    }
   }
 
   return (
