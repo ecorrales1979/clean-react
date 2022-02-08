@@ -46,7 +46,8 @@ const Login: React.FC<Props> = ({ authentication, validation }) => {
     if (state.isLoading || state.emailError || state.passwordError) return
     try {
       setState((oldState) => ({ ...oldState, isLoading: true }))
-      await authentication.auth({ email: state.email, password: state.password })
+      const result = await authentication.auth({ email: state.email, password: state.password })
+      if (result) localStorage.setItem('accessToken', result.accessToken)
     } catch (error: unknown) {
       let errorMsg = 'Erro de autenticação'
       if (error instanceof InvalidCredentialsError) {
