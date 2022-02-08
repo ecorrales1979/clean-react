@@ -137,4 +137,13 @@ describe('Login page', () => {
     simulateValidSubmit(sut)
     expect(authenticationSpy.auth).toHaveBeenCalledTimes(1)
   })
+
+  it('Should not call authentication if form is invalid', () => {
+    const validationError = faker.random.words()
+    const { sut, authenticationSpy } = makeSut({ validationError })
+    jest.spyOn(authenticationSpy, 'auth')
+    populateEmailField(sut)
+    fireEvent.submit(sut.getByTestId('login-form'))
+    expect(authenticationSpy.auth).toHaveBeenCalledTimes(0)
+  })
 })
