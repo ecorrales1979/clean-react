@@ -129,4 +129,12 @@ describe('Login page', () => {
     simulateValidSubmit(sut, email, password)
     expect(authenticationSpy.params).toEqual({ email, password })
   })
+
+  it('Should call authentication only once', () => {
+    const { sut, authenticationSpy } = makeSut()
+    jest.spyOn(authenticationSpy, 'auth')
+    simulateValidSubmit(sut)
+    simulateValidSubmit(sut)
+    expect(authenticationSpy.auth).toHaveBeenCalledTimes(1)
+  })
 })
