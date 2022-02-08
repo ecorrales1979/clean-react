@@ -1,4 +1,19 @@
 {
+  "name": "clean-react",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Project from course React with TDD and Clean Code (4Dev)",
+  "keywords": [
+    "TDD",
+    "Clean Code",
+    "React",
+    "ReactJS"
+  ],
+  "author": {
+    "name": "Eduardo Ernesto Corrales Reyna",
+    "email": "ecorrales1979@gmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open",
     "test": "jest --passWithNoTests --no-cache --runInBand",
