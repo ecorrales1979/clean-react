@@ -172,12 +172,12 @@ describe('Login page', () => {
     expect(loadingWrap.childElementCount).toBe(1)
   })
 
-  it('Should add access token to localStorage on success', async () => {
+  it('Should add access token to localStorage and redirect to home page on success', async () => {
     const { sut, authenticationSpy } = makeSut()
     simulateValidSubmit(sut)
     await waitFor(() => sut.getByTestId('login-form'))
     expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
-    // expect(history.location.pathname).toBe('/')
+    expect(history.location.pathname).toBe('/')
   })
 
   it('Should go to signup page', () => {
@@ -186,12 +186,5 @@ describe('Login page', () => {
     fireEvent.click(signup)
     expect(history.location.pathname).toBe('/signup')
     // expect(window.history.length).toBe(2)
-  })
-
-  it('Should navigate to / on success', async () => {
-    const { sut } = makeSut()
-    simulateValidSubmit(sut)
-    await waitFor(() => sut.getByTestId('login-form'))
-    expect(history.location.pathname).toBe('/')
   })
 })
