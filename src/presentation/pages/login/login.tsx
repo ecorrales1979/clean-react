@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import './login-styles.scss'
 import {
@@ -27,6 +27,7 @@ const Login: React.FC<Props> = ({ authentication, validation }) => {
     passwordError: '',
     mainError: ''
   })
+  const navigate = useNavigate()
 
   useEffect(() => {
     setState((oldState) => ({
@@ -49,6 +50,7 @@ const Login: React.FC<Props> = ({ authentication, validation }) => {
       setState((oldState) => ({ ...oldState, isLoading: true }))
       const result = await authentication.auth({ email: state.email, password: state.password })
       if (result) localStorage.setItem('accessToken', result.accessToken)
+      navigate('/', { replace: true })
     } catch (error: unknown) {
       let errorMsg = 'Erro de autenticação'
       if (error instanceof InvalidCredentialsError) {
