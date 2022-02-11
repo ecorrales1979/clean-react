@@ -72,6 +72,11 @@ const testElementExists = (sut: RenderResult, fieldName: string): void => {
   expect(element).toBeTruthy()
 }
 
+const testElementText = (sut: RenderResult, fieldName: string, text: string): void => {
+  const element = sut.getByTestId(fieldName)
+  expect(element.textContent).toBe(text)
+}
+
 describe('Login page', () => {
   afterEach(cleanup)
   beforeEach(() => {
@@ -174,8 +179,7 @@ describe('Login page', () => {
     jest.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
     await simulateValidSubmit(sut)
     testLoadingWrapCount(sut, 1)
-    const mainError = sut.getByTestId('main-error')
-    expect(mainError.textContent).toBe(error.message)
+    testElementText(sut, 'main-error', error.message)
   })
 
   it('Should add access token to localStorage and redirect to home page on success', async () => {
