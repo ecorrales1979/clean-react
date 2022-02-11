@@ -62,6 +62,11 @@ const testStatusForField = (sut: RenderResult, fieldName: string, validationErro
   expect(fieldStatus.textContent).toBe(validationError ? '🔴' : '🔵')
 }
 
+const testLoadingWrapCount = (sut: RenderResult, count: number): void => {
+  const loadingWrap = sut.getByTestId('loading-wrap')
+  expect(loadingWrap.childElementCount).toBe(count)
+}
+
 describe('Login page', () => {
   afterEach(cleanup)
   beforeEach(() => {
@@ -71,8 +76,7 @@ describe('Login page', () => {
   it('Should start with initial state', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    const loadingWrap = sut.getByTestId('loading-wrap')
-    expect(loadingWrap.childElementCount).toBe(0)
+    testLoadingWrapCount(sut, 0)
     const submitBtn = sut.getByTestId('submit') as HTMLButtonElement
     expect(submitBtn.disabled).toBe(true)
     testStatusForField(sut, 'email', validationError)
@@ -165,10 +169,9 @@ describe('Login page', () => {
     const error = new InvalidCredentialsError()
     jest.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
     await simulateValidSubmit(sut)
-    const loadingWrap = sut.getByTestId('loading-wrap')
+    testLoadingWrapCount(sut, 1)
     const mainError = sut.getByTestId('main-error')
     expect(mainError.textContent).toBe(error.message)
-    expect(loadingWrap.childElementCount).toBe(1)
   })
 
   it('Should add access token to localStorage and redirect to home page on success', async () => {
