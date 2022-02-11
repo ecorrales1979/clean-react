@@ -67,6 +67,11 @@ const testLoadingWrapCount = (sut: RenderResult, count: number): void => {
   expect(loadingWrap.childElementCount).toBe(count)
 }
 
+const testElementExists = (sut: RenderResult, fieldName: string): void => {
+  const element = sut.getByTestId(fieldName)
+  expect(element).toBeTruthy()
+}
+
 describe('Login page', () => {
   afterEach(cleanup)
   beforeEach(() => {
@@ -136,8 +141,7 @@ describe('Login page', () => {
   it('show spinner on submit', async () => {
     const { sut } = makeSut()
     await simulateValidSubmit(sut)
-    const spinner = sut.getByTestId('spinner')
-    expect(spinner).toBeTruthy()
+    testElementExists(sut, 'spinner')
   })
 
   it('should call Authentication with correct values', async () => {
