@@ -77,6 +77,11 @@ const testElementText = (sut: RenderResult, fieldName: string, text: string): vo
   expect(element.textContent).toBe(text)
 }
 
+const testButtonIsDisabled = (sut: RenderResult, fieldName: string, isDisabled: boolean): void => {
+  const element = sut.getByTestId(fieldName) as HTMLButtonElement
+  expect(element.disabled).toBe(isDisabled)
+}
+
 describe('Login page', () => {
   afterEach(cleanup)
   beforeEach(() => {
@@ -87,8 +92,7 @@ describe('Login page', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     testLoadingWrapCount(sut, 0)
-    const submitBtn = sut.getByTestId('submit') as HTMLButtonElement
-    expect(submitBtn.disabled).toBe(true)
+    testButtonIsDisabled(sut, 'submit', true)
     testStatusForField(sut, 'email', validationError)
     testStatusForField(sut, 'password', validationError)
   })
@@ -139,8 +143,7 @@ describe('Login page', () => {
     const { sut } = makeSut()
     populateEmailField(sut)
     populatePasswordField(sut)
-    const submitBtn = sut.getByTestId('submit') as HTMLButtonElement
-    expect(submitBtn.disabled).toBe(false)
+    testButtonIsDisabled(sut, 'submit', false)
   })
 
   it('show spinner on submit', async () => {
