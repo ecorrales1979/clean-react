@@ -21,4 +21,10 @@ describe('MinLengthValidation', () => {
     const error = sut.validate(faker.random.alphaNumeric(5))
     expect(error).toBeFalsy()
   })
+
+  it('Should return falsy if value is empty', () => {
+    const sut = makeSut(faker.database.column())
+    const error = sut.validate('')
+    expect(error).toBeFalsy()
+  })
 })
