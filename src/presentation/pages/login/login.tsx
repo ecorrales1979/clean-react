@@ -18,8 +18,17 @@ interface Props {
   authentication: Authentication
 }
 
+interface StateProps {
+  isLoading: boolean
+  email: string
+  password: string
+  emailError: string | null
+  passwordError: string | null
+  mainError: string | null
+}
+
 const Login: React.FC<Props> = ({ authentication, validation }) => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<StateProps>({
     isLoading: false,
     email: '',
     password: '',
@@ -45,7 +54,7 @@ const Login: React.FC<Props> = ({ authentication, validation }) => {
 
   const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>): Promise<void> => {
     ev.preventDefault()
-    if (state.isLoading || state.emailError || state.passwordError) return
+    if (state.isLoading || !!state.emailError || !!state.passwordError) return
     try {
       setState((oldState) => ({ ...oldState, isLoading: true }))
       const result = await authentication.auth({ email: state.email, password: state.password })
