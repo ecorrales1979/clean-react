@@ -1,3 +1,5 @@
+import faker from '@faker-js/faker'
+
 import { FieldValidationSpy } from '@/validation/mocks/mock-field-validation'
 import { ValidationComposite } from './validation-composite'
 
@@ -6,10 +8,10 @@ interface SutType {
   fieldValidationSpies: FieldValidationSpy[]
 }
 
-const makeSut = (): SutType => {
+const makeSut = (field: string): SutType => {
   const fieldValidationSpies = [
-    new FieldValidationSpy('any_field'),
-    new FieldValidationSpy('any_field')
+    new FieldValidationSpy(field),
+    new FieldValidationSpy(field)
   ]
   const sut = new ValidationComposite(fieldValidationSpies)
 
@@ -18,17 +20,22 @@ const makeSut = (): SutType => {
 
 describe('ValidationComposite', () => {
   it('Should return error if any validation fails', () => {
-    const { sut, fieldValidationSpies } = makeSut()
-    fieldValidationSpies[1].error = new Error('any_message')
-    const error = sut.validate('any_field', 'any_value')
-    expect(error).toBe('any_message')
+    const fieldName = faker.database.column()
+    const { sut, fieldValidationSpies } = makeSut(fieldName)
+    const errorMessage = faker.random.words()
+    fieldValidationSpies[1].error = new Error(errorMessage)
+    const error = sut.validate(fieldName, faker.random.word())
+    expect(error).toBe(errorMessage)
   })
 
   it('Should return first error found if some validations fail', () => {
-    const { sut, fieldValidationSpies } = makeSut()
-    fieldValidationSpies[0].error = new Error('first_error_message')
-    fieldValidationSpies[1].error = new Error('second_error_message')
-    const error = sut.validate('any_field', 'any_value')
-    expect(error).toBe('first_error_message')
+    const fieldName = faker.database.column()
+    const { sut, fieldValidationSpies } = makeSut(fieldName)
+    const firstErrorMessage = faker.random.words()
+    fieldValidationSpies[0].error = new Error(firstErrorMessage)
+    const secondErrorMessage = faker.random.words()
+    fieldValidationSpies[1].error = new Error(secondErrorMessage)
+    const error = sut.validate(fieldName, faker.random.word())
+    expect(error).toBe(firstErrorMessage)
   })
 })
