@@ -1,0 +1,17 @@
+name: CI workflow
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install yarn
+        run: npm install --global yarn
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run eslint
+        run: yarn eslint 'src/**'
+
+      - name: Run tests
+        run: yarn test:ci
