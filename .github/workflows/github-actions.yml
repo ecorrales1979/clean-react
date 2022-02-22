@@ -16,4 +16,4 @@ jobs:
         run: yarn eslint 'src/**'
 
       - name: Run tests
-        run: yarn test:coveralls
+        run: yarn test:ci
