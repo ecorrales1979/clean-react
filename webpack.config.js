@@ -1,4 +1,5 @@
 const path = require('path')
+const { EnvironmentPlugin } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
@@ -16,19 +17,22 @@ module.exports = {
     }
   },
   module: {
-    rules: [{
-      test: /\.ts(x?)$/,
-      loader: 'ts-loader',
-      exclude: /node_modules/
-    }, {
-      test: /\.s[ac]ss$/i,
-      use: [
-        "style-loader", // Creates `style` nodes from JS strings
-        "css-loader", // Translates CSS into CommonJS
-        "sass-loader", // Compiles Sass to CSS
-      ],
-      exclude: /node_modules/
-    }]
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader', // Creates `style` nodes from JS strings
+          'css-loader', // Translates CSS into CommonJS
+          'sass-loader' // Compiles Sass to CSS
+        ],
+        exclude: /node_modules/
+      }
+    ]
   },
   devServer: {
     static: {
@@ -44,6 +48,9 @@ module.exports = {
     'react-dom': 'ReactDOM'
   },
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new EnvironmentPlugin({
+      API_URL: 'http://fordevs.herokuapp.com/api'
+    })
   ]
 }
