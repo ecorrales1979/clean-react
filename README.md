@@ -45,7 +45,7 @@ This project is the result of a training by Rodrigo Manguinho available at [Udem
 - [Builder](https://en.wikipedia.org/wiki/Builder_pattern)
 - [Proxy](https://en.wikipedia.org/wiki/Proxy_pattern)
 
-## Methodologies e Designs
+## Methodologies and Designs
 
 - [TDD](https://en.wikipedia.org/wiki/Test-driven_development)
 - [Clean Architecture](https://www.google.com/books/edition/Clean_Architecture/uGE1DwAAQBAJ)
@@ -102,7 +102,7 @@ This project is the result of a training by Rodrigo Manguinho available at [Udem
 - [Router](https://github.com/remix-run/react-router)
 - [Memo](https://reactjs.org/docs/hooks-reference.html#usememo)
 
-> ## Features do Typescript
+> ## Typescript Features
 
 - [Advanced OOP](https://www.typescriptlang.org/docs/handbook/classes.html)
 - [Interface](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces)
@@ -115,7 +115,7 @@ This project is the result of a training by Rodrigo Manguinho available at [Udem
 - Deploy
 - [Generics](https://www.typescriptlang.org/docs/handbook/2/objects.html#generic-object-types)
 
-> ## Features de Testes
+> ## Tests Features
 
 - [Unit Tests](https://en.wikipedia.org/wiki/Unit_testing)
 - [Integration Tests](https://en.wikipedia.org/wiki/Integration_testing)
