@@ -179,7 +179,7 @@ describe('Login page', () => {
     expect(authenticationSpy.auth).toHaveBeenCalledTimes(0)
   })
 
-  it('Should present error if authentication fails', async () => {
+  it('Should present error if Authentication fails', async () => {
     const { sut, authenticationSpy } = makeSut()
     const error = new InvalidCredentialsError()
     jest.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
@@ -193,6 +193,15 @@ describe('Login page', () => {
     await simulateValidSubmit(sut)
     expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
     expect(history.location.pathname).toBe('/')
+  })
+
+  it('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest.spyOn(saveAccessTokenMock, 'save').mockReturnValue(Promise.reject(error))
+    await simulateValidSubmit(sut)
+    testLoadingWrapCount(sut, 1)
+    testElementText(sut, 'main-error', error.message)
   })
 
   it('Should go to signup page', () => {
