@@ -5,7 +5,7 @@ import { CompareFieldsValidation } from './compare-fields-validation'
 
 const makeSut = (
   fieldName = faker.database.column(),
-  valueToCompare: string
+  valueToCompare = faker.random.word()
 ): CompareFieldsValidation => {
   return new CompareFieldsValidation(fieldName, valueToCompare)
 }
@@ -19,11 +19,17 @@ describe('CompareFieldsValidation', () => {
     expect(error).toEqual(new InvalidFieldError(fieldName))
   })
 
-  it('Should return falsy if vompare is valid', () => {
+  it('Should return falsy if compare is valid', () => {
     const fieldName = faker.database.column()
     const value = faker.random.word()
     const sut = makeSut(fieldName, value)
     const error = sut.validate(value)
+    expect(error).toBeFalsy()
+  })
+
+  it('Should return falsy if email is empty', () => {
+    const sut = makeSut()
+    const error = sut.validate('')
     expect(error).toBeFalsy()
   })
 })
