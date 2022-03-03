@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
 
 import './signup-styles.scss'
 import {
@@ -10,11 +9,29 @@ import {
 } from '@/presentation/components'
 import { FormContext } from '@/presentation/contexts'
 
+interface StateProps {
+  isLoading: boolean
+  nameError: string | null
+  emailError: string | null
+  passwordError: string | null
+  passwordConfirmationError: string | null
+  mainError: string | null
+}
+
 const SignUp: React.FC = () => {
+  const [state] = useState<StateProps>({
+    isLoading: false,
+    nameError: 'Campo obrigatório',
+    emailError: 'Campo obrigatório',
+    passwordError: 'Campo obrigatório',
+    passwordConfirmationError: 'Campo obrigatório',
+    mainError: ''
+  })
+
   return (
     <div className="signup">
       <Header />
-      <FormContext.Provider value={{ state: {} }}>
+      <FormContext.Provider value={{ state }}>
         <form className="form">
           <h2>Criar conta</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
@@ -24,10 +41,12 @@ const SignUp: React.FC = () => {
           <button
             type="submit"
             className="btn-submit"
+            disabled
+            data-testid="submit"
           >
             Entrar
           </button>
-          <Link to="/login" className="link">Voltar</Link>
+          <span className="link">Voltar</span>
           <FormStatus />
         </form>
       </FormContext.Provider>
