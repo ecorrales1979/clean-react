@@ -1,0 +1,42 @@
+@import '../../styles/colors.scss';
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+
+  .form {
+    background-color: $light;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    align-self: center;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px -1px $dark;
+
+    h2 {
+      color: $primaryDark;
+      font-size: 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .btn-submit {
+      margin-top: 32px;
+    }
+
+    .link {
+      text-align: center;
+      color: $primary;
+      text-transform: lowercase;
+      margin-top: 16px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
