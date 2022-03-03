@@ -55,6 +55,15 @@ describe('', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
+  it('should throw UnexpectedError if HttpPostClient returns 404', async () => {
+    const { httpPostClientSpy, sut } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.notFound
+    }
+    const promise = sut.add(mockAddAccountParams())
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
   it('should throw UnexpectedError if HttpPostClient returns 500', async () => {
     const { httpPostClientSpy, sut } = makeSut()
     httpPostClientSpy.response = {
