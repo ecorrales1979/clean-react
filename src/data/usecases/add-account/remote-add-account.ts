@@ -22,7 +22,7 @@ export class RemoteAddAccount implements AddAccount {
       case HttpStatusCode.forbidden:
         throw new EmailInUseError()
       case HttpStatusCode.success:
-        return undefined
+        return response.body
       default:
         throw new UnexpectedError()
     }
