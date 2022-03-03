@@ -27,4 +27,11 @@ describe('', () => {
     await sut.add(mockAddAccountParams())
     expect(httpPostClientSpy.url).toBe(url)
   })
+
+  it('Should call HttpPostClient with corrent body', async () => {
+    const addAccountParams = mockAddAccountParams()
+    const { httpPostClientSpy, sut } = makeSut()
+    await sut.add(addAccountParams)
+    expect(httpPostClientSpy.body).toEqual(addAccountParams)
+  })
 })
