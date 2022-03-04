@@ -18,6 +18,7 @@ interface StateProps {
   isLoading: boolean
   name: string
   email: string
+  password: string
   nameError: string | null
   emailError: string | null
   passwordError: string | null
@@ -30,9 +31,10 @@ const SignUp: React.FC<Props> = ({ validation }) => {
     isLoading: false,
     name: '',
     email: '',
+    password: '',
     nameError: '',
-    emailError: 'Campo obrigatório',
-    passwordError: 'Campo obrigatório',
+    emailError: '',
+    passwordError: '',
     passwordConfirmationError: 'Campo obrigatório',
     mainError: ''
   })
@@ -41,9 +43,10 @@ const SignUp: React.FC<Props> = ({ validation }) => {
     setState((oldState) => ({
       ...oldState,
       nameError: validation.validate('name', state.name),
-      emailError: validation.validate('email', state.email)
+      emailError: validation.validate('email', state.email),
+      passwordError: validation.validate('password', state.password)
     }))
-  }, [state.name, state.email])
+  }, [state.name, state.email, state.password])
 
   return (
     <div className="signup">
