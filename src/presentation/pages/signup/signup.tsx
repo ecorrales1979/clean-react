@@ -9,9 +9,11 @@ import {
 } from '@/presentation/components'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
+import { AddAccount } from '@/domain/usecases'
 
 interface Props {
   validation: Validation
+  addAccount: AddAccount
 }
 
 interface StateProps {
@@ -27,7 +29,7 @@ interface StateProps {
   mainError: string | null
 }
 
-const SignUp: React.FC<Props> = ({ validation }) => {
+const SignUp: React.FC<Props> = ({ addAccount, validation }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     name: '',
@@ -65,9 +67,15 @@ const SignUp: React.FC<Props> = ({ validation }) => {
     state.passwordConfirmationError
   ])
 
-  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>): Promise<void> => {
     ev.preventDefault()
     setState((oldState) => ({ ...oldState, isLoading: true }))
+    await addAccount.add({
+      name: state.name,
+      email: state.email,
+      password: state.password,
+      passwordConfirmation: state.passwordConfirmation
+    })
   }
 
   return (
