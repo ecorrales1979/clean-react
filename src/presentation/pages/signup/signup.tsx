@@ -65,11 +65,16 @@ const SignUp: React.FC<Props> = ({ validation }) => {
     state.passwordConfirmationError
   ])
 
+  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>): void => {
+    ev.preventDefault()
+    setState((oldState) => ({ ...oldState, isLoading: true }))
+  }
+
   return (
     <div className="signup">
       <Header />
       <FormContext.Provider value={{ state, setState }}>
-        <form className="form">
+        <form data-testid="signup-form" className="form" onSubmit={handleSubmit}>
           <h2>Criar conta</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
