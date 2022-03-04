@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import './signup-styles.scss'
 import {
@@ -51,6 +51,20 @@ const SignUp: React.FC<Props> = ({ validation }) => {
     }))
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
+  const isValidForm = useMemo(() => {
+    return (
+      !state.nameError &&
+      !state.emailError &&
+      !state.passwordError &&
+      !state.passwordConfirmationError
+    )
+  }, [
+    state.nameError,
+    state.emailError,
+    state.passwordError,
+    state.passwordConfirmationError
+  ])
+
   return (
     <div className="signup">
       <Header />
@@ -64,7 +78,7 @@ const SignUp: React.FC<Props> = ({ validation }) => {
           <button
             type="submit"
             className="btn-submit"
-            disabled
+            disabled={!isValidForm}
             data-testid="submit"
           >
             Entrar
