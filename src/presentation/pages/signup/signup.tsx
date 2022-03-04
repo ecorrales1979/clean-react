@@ -17,6 +17,7 @@ interface Props {
 interface StateProps {
   isLoading: boolean
   name: string
+  email: string
   nameError: string | null
   emailError: string | null
   passwordError: string | null
@@ -28,6 +29,7 @@ const SignUp: React.FC<Props> = ({ validation }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     name: '',
+    email: '',
     nameError: '',
     emailError: 'Campo obrigatório',
     passwordError: 'Campo obrigatório',
@@ -38,9 +40,10 @@ const SignUp: React.FC<Props> = ({ validation }) => {
   useEffect(() => {
     setState((oldState) => ({
       ...oldState,
-      nameError: validation.validate('name', state.name)
+      nameError: validation.validate('name', state.name),
+      emailError: validation.validate('email', state.email)
     }))
-  }, [state.name])
+  }, [state.name, state.email])
 
   return (
     <div className="signup">
