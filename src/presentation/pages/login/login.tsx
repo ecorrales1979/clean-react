@@ -6,7 +6,8 @@ import {
   Footer,
   FormStatus,
   Input,
-  LoginHeader as Header
+  LoginHeader as Header,
+  SubmitButton
 } from '@/presentation/components'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
@@ -21,6 +22,7 @@ interface Props {
 
 interface StateProps {
   isLoading: boolean
+  isFormInvalid: boolean
   email: string
   password: string
   emailError: string | null
@@ -31,6 +33,7 @@ interface StateProps {
 const Login: React.FC<Props> = ({ authentication, validation, saveAccessToken }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
+    isFormInvalid: true,
     email: '',
     password: '',
     emailError: '',
@@ -40,22 +43,20 @@ const Login: React.FC<Props> = ({ authentication, validation, saveAccessToken })
   const navigate = useNavigate()
 
   useEffect(() => {
-    setState((oldState) => ({
-      ...oldState,
-      emailError: validation.validate('email', state.email)
-    }))
-  }, [state.email])
+    const emailError = validation.validate('email', state.email)
+    const passwordError = validation.validate('password', state.password)
 
-  useEffect(() => {
     setState((oldState) => ({
       ...oldState,
-      passwordError: validation.validate('password', state.password)
+      emailError,
+      passwordError,
+      isFormInvalid: !!emailError || !!passwordError
     }))
-  }, [state.password])
+  }, [state.email, state.password])
 
   const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>): Promise<void> => {
     ev.preventDefault()
-    if (state.isLoading || !!state.emailError || !!state.passwordError) return
+    if (state.isLoading || state.isFormInvalid) return
     try {
       setState((oldState) => ({ ...oldState, isLoading: true }))
       const result = await authentication.auth({ email: state.email, password: state.password })
@@ -82,14 +83,7 @@ const Login: React.FC<Props> = ({ authentication, validation, saveAccessToken })
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
           <Input type="password" name="password" placeholder="Digite sua senha" />
-          <button
-            type="submit"
-            data-testid="submit"
-            disabled={!!state.emailError || !!state.passwordError || state.isLoading}
-            className="btn-submit"
-          >
-            Entrar
-          </button>
+          <SubmitButton>Entrar</SubmitButton>
           <Link to="/signup" data-testid="signup-link" className="link">Criar conta</Link>
           <FormStatus />
         </form>
