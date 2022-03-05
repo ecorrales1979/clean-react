@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import './signup-styles.scss'
+import { EmailInUseError } from '@/domain/errors'
+import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import {
   Footer,
   FormStatus,
@@ -9,12 +12,11 @@ import {
 } from '@/presentation/components'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
-import { AddAccount } from '@/domain/usecases'
-import { EmailInUseError } from '@/domain/errors'
 
 interface Props {
   validation: Validation
   addAccount: AddAccount
+  saveAccessToken: SaveAccessToken
 }
 
 interface StateProps {
@@ -30,7 +32,7 @@ interface StateProps {
   mainError: string | null
 }
 
-const SignUp: React.FC<Props> = ({ addAccount, validation }) => {
+const SignUp: React.FC<Props> = ({ addAccount, validation, saveAccessToken }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     name: '',
@@ -43,6 +45,7 @@ const SignUp: React.FC<Props> = ({ addAccount, validation }) => {
     passwordConfirmationError: '',
     mainError: ''
   })
+  const navigate = useNavigate()
 
   useEffect(() => {
     setState((oldState) => ({
@@ -73,12 +76,14 @@ const SignUp: React.FC<Props> = ({ addAccount, validation }) => {
     if (state.isLoading || !isValidForm) return
     try {
       setState((oldState) => ({ ...oldState, isLoading: true }))
-      await addAccount.add({
+      const result = await addAccount.add({
         name: state.name,
         email: state.email,
         password: state.password,
         passwordConfirmation: state.passwordConfirmation
       })
+      if (result) await saveAccessToken.save(result.accessToken)
+      navigate('/', { replace: true })
     } catch (error: unknown) {
       let errorMsg = 'Erro criando a conta'
       if (error instanceof EmailInUseError) {
