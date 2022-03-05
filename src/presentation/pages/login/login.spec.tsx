@@ -52,11 +52,6 @@ const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.ema
   await waitFor(() => form)
 }
 
-const testElementText = (sut: RenderResult, fieldName: string, text: string): void => {
-  const element = sut.getByTestId(fieldName)
-  expect(element.textContent).toBe(text)
-}
-
 describe('Login page', () => {
   afterEach(cleanup)
 
@@ -154,7 +149,7 @@ describe('Login page', () => {
     jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error)
     await simulateValidSubmit(sut)
     Helper.testChildCount(sut, 'loading-wrap', 1)
-    testElementText(sut, 'main-error', error.message)
+    Helper.testElementText(sut, 'main-error', error.message)
   })
 
   it('Should call SaveAccessToken and redirect to home page on success', async () => {
@@ -170,7 +165,7 @@ describe('Login page', () => {
     jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error)
     await simulateValidSubmit(sut)
     Helper.testChildCount(sut, 'loading-wrap', 1)
-    testElementText(sut, 'main-error', error.message)
+    Helper.testElementText(sut, 'main-error', error.message)
   })
 
   it('Should go to signup page', () => {
