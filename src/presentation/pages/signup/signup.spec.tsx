@@ -192,4 +192,11 @@ describe('SignUp page', () => {
     Helper.testChildCount(sut, 'loading-wrap', 1)
     Helper.testElementText(sut, 'main-error', error.message)
   })
+
+  it('Should go to login page', () => {
+    const { sut } = makeSut()
+    const loginLink = sut.getByTestId('login')
+    fireEvent.click(loginLink)
+    expect(history.location.pathname).toBe('/login')
+  })
 })
