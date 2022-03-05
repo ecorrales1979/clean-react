@@ -14,7 +14,7 @@
     "react"
   ],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig-eslint.json"
   },
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
