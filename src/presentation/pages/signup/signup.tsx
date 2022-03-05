@@ -10,6 +10,7 @@ import {
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount } from '@/domain/usecases'
+import { EmailInUseError } from '@/domain/errors'
 
 interface Props {
   validation: Validation
@@ -70,13 +71,25 @@ const SignUp: React.FC<Props> = ({ addAccount, validation }) => {
   const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>): Promise<void> => {
     ev.preventDefault()
     if (state.isLoading || !isValidForm) return
-    setState((oldState) => ({ ...oldState, isLoading: true }))
-    await addAccount.add({
-      name: state.name,
-      email: state.email,
-      password: state.password,
-      passwordConfirmation: state.passwordConfirmation
-    })
+    try {
+      setState((oldState) => ({ ...oldState, isLoading: true }))
+      await addAccount.add({
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation
+      })
+    } catch (error: unknown) {
+      let errorMsg = 'Erro criando a conta'
+      if (error instanceof EmailInUseError) {
+        errorMsg = error.message
+      }
+      setState(oldState => ({
+        ...oldState,
+        isLoading: false,
+        mainError: errorMsg
+      }))
+    }
   }
 
   return (
