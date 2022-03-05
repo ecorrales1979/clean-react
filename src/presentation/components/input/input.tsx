@@ -37,7 +37,7 @@ const Input: React.FC<Props> = (props) => {
         data-testid={`${props.name}-status`}
         className="input-status"
       >
-        {error ? '🔴' : '🔵'}
+        {error ? '🔴' : '🟢'}
       </span>
     </div>
   )
