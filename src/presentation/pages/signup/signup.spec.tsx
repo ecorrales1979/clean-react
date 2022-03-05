@@ -1,34 +1,44 @@
 import React from 'react'
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 import faker from '@faker-js/faker'
 
 import SignUp from './signup'
 import { EmailInUseError } from '@/domain/errors'
-import { Helper, ValidationSpy, AddAccountSpy } from '@/presentation/mocks'
+import { Helper, ValidationSpy, AddAccountSpy, SaveAccessTokenMock } from '@/presentation/mocks'
 
 interface SutTypes {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
+  saveAccessTokenMock: SaveAccessTokenMock
 }
 
 interface SutParams {
   validationError?: string
 }
 
+const history = createMemoryHistory({ initialEntries: ['/signup'] })
+
 const makeSut = (params?: SutParams): SutTypes => {
   const validationSpy = new ValidationSpy()
   const addAccountSpy = new AddAccountSpy()
+  const saveAccessTokenMock = new SaveAccessTokenMock()
   validationSpy.errorMessage = params?.validationError ?? ''
   const sut = render(
-    <SignUp
-      validation={validationSpy}
-      addAccount={addAccountSpy}
-    />
+    <HistoryRouter history={history}>
+      <SignUp
+        validation={validationSpy}
+        addAccount={addAccountSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
+    </HistoryRouter>
   )
 
   return {
     sut,
-    addAccountSpy
+    addAccountSpy,
+    saveAccessTokenMock
   }
 }
 
@@ -165,5 +175,12 @@ describe('SignUp page', () => {
     await simulateValidSubmit(sut)
     Helper.testElementText(sut, 'main-error', error.message)
     Helper.testChildCount(sut, 'loading-wrap', 1)
+  })
+
+  it('Should call SaveAccessToken and redirect to home page on success', async () => {
+    const { sut, addAccountSpy, saveAccessTokenMock } = makeSut()
+    await simulateValidSubmit(sut)
+    expect(saveAccessTokenMock.accessToken).toBe(addAccountSpy.account.accessToken)
+    expect(history.location.pathname).toBe('/')
   })
 })
