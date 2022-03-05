@@ -183,4 +183,13 @@ describe('SignUp page', () => {
     expect(saveAccessTokenMock.accessToken).toBe(addAccountSpy.account.accessToken)
     expect(history.location.pathname).toBe('/')
   })
+
+  it('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new EmailInUseError()
+    jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error)
+    await simulateValidSubmit(sut)
+    Helper.testChildCount(sut, 'loading-wrap', 1)
+    Helper.testElementText(sut, 'main-error', error.message)
+  })
 })
