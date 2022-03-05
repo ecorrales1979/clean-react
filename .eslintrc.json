@@ -6,9 +6,11 @@
   },
   "extends": [
     "standard-with-typescript",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:cypress/recommended"
   ],
   "plugins": [
+    "cypress",
     "react"
   ],
   "parserOptions": {
@@ -21,5 +23,8 @@
     "@typescript-eslint/strict-boolean-expressions": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
+  },
+  "env": {
+    "cypress/globals": true
   }
 }
