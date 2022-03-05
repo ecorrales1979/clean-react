@@ -5,7 +5,9 @@ const baseUrl = Cypress.config('baseUrl')
 describe('Login', () => {
   beforeEach(() => {
     cy.visit('/login')
+    cy.window().then(w => w.localStorage.clear())
   })
+
   it('Should load with correct initial state', () => {
     cy.getByTestId('email').should('have.attr', 'readonly')
     cy.getByTestId('password').should('have.attr', 'readonly')
@@ -55,5 +57,16 @@ describe('Login', () => {
       .getByTestId('spinner').should('not.exist')
       .getByTestId('main-error').should('contain.text', 'Credenciais inválidas')
     cy.url().should('eq', `${baseUrl}/login`)
+  })
+
+  it('Should save accessToken if valid credentials are provided', () => {
+    cy.getByTestId('email').focus().type('mango@gmail.com')
+    cy.getByTestId('password').focus().type('12345')
+    cy.getByTestId('submit').click()
+    cy.getByTestId('loading-wrap').getByTestId('spinner').should('exist')
+    cy.getByTestId('loading-wrap').getByTestId('main-error').should('not.exist')
+    cy.getByTestId('loading-wrap').getByTestId('spinner').should('not.exist')
+    cy.url().should('eq', `${baseUrl}/`)
+    cy.window().then(w => assert.isOk(w.localStorage.getItem('accessToken')))
   })
 })
