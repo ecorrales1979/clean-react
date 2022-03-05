@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import './signup-styles.scss'
 import { EmailInUseError } from '@/domain/errors'
@@ -115,7 +115,7 @@ const SignUp: React.FC<Props> = ({ addAccount, validation, saveAccessToken }) =>
           >
             Entrar
           </button>
-          <span className="link">Voltar</span>
+          <Link to="/login" data-testid="login" className="link">Voltar</Link>
           <FormStatus />
         </form>
       </FormContext.Provider>
