@@ -148,4 +148,12 @@ describe('SignUp page', () => {
     await simulateValidSubmit(sut)
     expect(addAccountSpy.add).toHaveBeenCalledTimes(1)
   })
+
+  it('Should not call AddAccount if form is invalid', async () => {
+    const validationError = faker.random.words()
+    const { sut, addAccountSpy } = makeSut({ validationError })
+    jest.spyOn(addAccountSpy, 'add')
+    await simulateValidSubmit(sut)
+    expect(addAccountSpy.add).toHaveBeenCalledTimes(0)
+  })
 })
