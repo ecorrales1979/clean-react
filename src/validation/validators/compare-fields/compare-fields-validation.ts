@@ -4,13 +4,13 @@ import { InvalidFieldError } from '@/validation/errors'
 export class CompareFieldsValidation implements FieldValidation {
   constructor (
     readonly field: string,
-    private readonly valueToCompare: string
+    private readonly fieldToCompare: string
   ) {}
 
-  validate (value: string): Error | null {
-    if (!value) return null
+  validate (input: Record<string, any>): Error | null {
+    if (!input[this.field]) return null
 
-    return value !== this.valueToCompare
+    return input[this.field] !== input[this.fieldToCompare]
       ? new InvalidFieldError(this.field)
       : null
   }

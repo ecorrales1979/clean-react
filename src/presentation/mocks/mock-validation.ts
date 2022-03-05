@@ -5,9 +5,9 @@ export class ValidationSpy implements Validation {
   fieldname!: string
   fieldvalue!: string
 
-  validate (fieldname: string, fieldvalue: string): string {
+  validate (fieldname: string, input: Record<string, any>): string {
     this.fieldname = fieldname
-    this.fieldvalue = fieldvalue
+    this.fieldvalue = input[fieldname]
     return this.errorMessage
   }
 }

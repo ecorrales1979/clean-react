@@ -4,32 +4,44 @@ import { InvalidFieldError } from '@/validation/errors'
 import { CompareFieldsValidation } from './compare-fields-validation'
 
 const makeSut = (
-  fieldName = faker.database.column(),
-  valueToCompare = faker.random.word()
+  field: string,
+  fieldToCompare: string
 ): CompareFieldsValidation => {
-  return new CompareFieldsValidation(fieldName, valueToCompare)
+  return new CompareFieldsValidation(field, fieldToCompare)
 }
 
 describe('CompareFieldsValidation', () => {
   it('should return error if compare is invalid', () => {
-    const fieldName = faker.database.column()
-    const sut = makeSut(fieldName, faker.random.word())
-    const error = sut.validate(faker.random.word())
-
-    expect(error).toEqual(new InvalidFieldError(fieldName))
+    const field = faker.database.column()
+    const fieldToCompare = faker.database.column()
+    const sut = makeSut(field, fieldToCompare)
+    const error = sut.validate({
+      [field]: faker.random.word(),
+      [fieldToCompare]: faker.random.word()
+    })
+    expect(error).toEqual(new InvalidFieldError(field))
   })
 
   it('Should return falsy if compare is valid', () => {
-    const fieldName = faker.database.column()
+    const field = faker.database.column()
+    const fieldToCompare = faker.database.column()
     const value = faker.random.word()
-    const sut = makeSut(fieldName, value)
-    const error = sut.validate(value)
+    const sut = makeSut(field, fieldToCompare)
+    const error = sut.validate({
+      [field]: value,
+      [fieldToCompare]: value
+    })
     expect(error).toBeFalsy()
   })
 
-  it('Should return falsy if email is empty', () => {
-    const sut = makeSut()
-    const error = sut.validate('')
+  it('Should return falsy if field is empty', () => {
+    const field = faker.database.column()
+    const fieldToCompare = faker.database.column()
+    const sut = makeSut(field, fieldToCompare)
+    const error = sut.validate({
+      [field]: '',
+      [fieldToCompare]: faker.random.word()
+    })
     expect(error).toBeFalsy()
   })
 })
