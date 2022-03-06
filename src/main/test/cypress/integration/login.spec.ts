@@ -79,6 +79,23 @@ describe('Login', () => {
     cy.url().should('eq', `${baseUrl}/login`)
   })
 
+  it('Should throw error if invalid data is returned', () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 200,
+      body: { invalidProperty: faker.datatype.uuid() },
+      delay: 50
+    })
+    cy.getByTestId('email').focus().type('mango@gmail.com')
+    cy.getByTestId('password').focus().type('12345')
+    cy.getByTestId('submit').click()
+    cy.getByTestId('spinner').should('exist')
+    cy.getByTestId('main-error').should('not.exist')
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error').should('contain.text', 'Erro de autenticação')
+    cy.window().then(w => expect(w.localStorage.getItem('accessToken')).to.be.null)
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
+
   it('Should save accessToken if valid credentials are provided', () => {
     cy.intercept('POST', /login/, {
       statusCode: 200,
