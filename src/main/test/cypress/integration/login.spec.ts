@@ -85,8 +85,8 @@ describe('Login', () => {
       body: { invalidProperty: faker.datatype.uuid() },
       delay: 50
     })
-    cy.getByTestId('email').focus().type('mango@gmail.com')
-    cy.getByTestId('password').focus().type('12345')
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').click()
     cy.getByTestId('spinner').should('exist')
     cy.getByTestId('main-error').should('not.exist')
@@ -102,8 +102,8 @@ describe('Login', () => {
       body: { accessToken: faker.datatype.uuid() },
       delay: 50
     })
-    cy.getByTestId('email').focus().type('mango@gmail.com')
-    cy.getByTestId('password').focus().type('12345')
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').click()
     cy.getByTestId('spinner').should('exist')
     cy.getByTestId('main-error').should('not.exist')
