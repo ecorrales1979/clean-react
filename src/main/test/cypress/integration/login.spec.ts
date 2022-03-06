@@ -47,26 +47,35 @@ describe('Login', () => {
     cy.getByTestId('loading-wrap').should('not.have.descendants')
   })
 
-  it('Should present error state if invalid credentials are provided', () => {
+  it('Should present InvalidCredentialsError on 401', () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 401,
+      body: { error: faker.random.words() },
+      delay: 50
+    })
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').click()
-    cy.getByTestId('loading-wrap')
-      .getByTestId('spinner').should('exist')
-      .getByTestId('main-error').should('not.exist')
-      .getByTestId('spinner').should('not.exist')
-      .getByTestId('main-error').should('contain.text', 'Credenciais inválidas')
+    cy.getByTestId('spinner').should('exist')
+    cy.getByTestId('main-error').should('not.exist')
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error').should('contain.text', 'Credenciais inválidas')
     cy.url().should('eq', `${baseUrl}/login`)
   })
 
   it('Should save accessToken if valid credentials are provided', () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 200,
+      body: { accessToken: faker.datatype.uuid() },
+      delay: 50
+    })
     cy.getByTestId('email').focus().type('mango@gmail.com')
     cy.getByTestId('password').focus().type('12345')
     cy.getByTestId('submit').click()
-    cy.getByTestId('loading-wrap').getByTestId('spinner').should('exist')
-    cy.getByTestId('loading-wrap').getByTestId('main-error').should('not.exist')
-    cy.getByTestId('loading-wrap').getByTestId('spinner').should('not.exist')
-    cy.url().should('eq', `${baseUrl}/`)
+    cy.getByTestId('spinner').should('exist')
+    cy.getByTestId('main-error').should('not.exist')
+    cy.getByTestId('spinner').should('not.exist')
     cy.window().then(w => assert.isOk(w.localStorage.getItem('accessToken')))
+    cy.url().should('eq', `${baseUrl}/`)
   })
 })
