@@ -65,4 +65,13 @@ describe('SignUp', () => {
     FormHelpers.testMainError('Esse e-mail já está em uso')
     FormHelpers.testUrl('/signup')
   })
+
+  it('Should present UnexpectedError on error cases', () => {
+    Http.mockUnexpectedError(50)
+    simulateValidSubmit()
+    FormHelpers.testLoading()
+    cy.wait('@request')
+    FormHelpers.testMainError('Erro criando a conta')
+    FormHelpers.testUrl('/signup')
+  })
 })
