@@ -1,4 +1,4 @@
-import * as Helper from '../support/http-mocks'
+import * as Helper from './http-mocks'
 
 export const mockInvalidCredentialsError = (delay?: number): void => {
   Helper.mockInvalidCredentialsError(/login/, delay)
