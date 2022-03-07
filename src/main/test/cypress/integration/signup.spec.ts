@@ -103,4 +103,11 @@ describe('SignUp', () => {
     cy.wait('@request')
     FormHelpers.testHttpCallsCount(1)
   })
+
+  it('Should call submit if enter key is pressed', () => {
+    Http.mockSuccess({ accessToken: faker.datatype.uuid() }, 50)
+    populateFields()
+    cy.getByTestId('passwordConfirmation').type('{enter}')
+    FormHelpers.testHttpCallsCount(1)
+  })
 })
