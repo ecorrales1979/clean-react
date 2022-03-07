@@ -110,4 +110,18 @@ describe('SignUp', () => {
     cy.getByTestId('passwordConfirmation').type('{enter}')
     FormHelpers.testHttpCallsCount(1)
   })
+
+  it('Should prevent request to be called if form is invalid', () => {
+    Http.mockSuccess({ accessToken: faker.datatype.uuid() })
+    cy.getByTestId('name').focus().type(faker.random.word())
+    cy.getByTestId('email').focus().type(faker.random.word())
+    cy.getByTestId('password')
+      .focus()
+      .type(faker.random.alphaNumeric(5))
+    cy.getByTestId('passwordConfirmation')
+      .focus()
+      .type(faker.random.alphaNumeric(5))
+      .type('{enter}')
+    FormHelpers.testHttpCallsCount(0)
+  })
 })
