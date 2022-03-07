@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 
 import './input-styles.scss'
 import { FormContext } from '@/presentation/contexts'
@@ -11,10 +11,6 @@ const Input: React.FC<Props> = (props) => {
   const { state, setState } = useContext(FormContext)
   const error = state[`${props.name}Error`]
 
-  const elementId = useMemo(() => {
-    return props.id ?? props.name
-  }, [props.id, props.name])
-
   return (
     <div
       className="input-wrap"
@@ -23,7 +19,7 @@ const Input: React.FC<Props> = (props) => {
     >
       <input
         {...props}
-        id={elementId}
+        id={props.name}
         placeholder=" "
         title={error}
         readOnly
@@ -37,7 +33,7 @@ const Input: React.FC<Props> = (props) => {
         }}
       />
       <label
-        htmlFor={elementId}
+        htmlFor={props.name}
         title={error}
         data-testid={`${props.name}-label`}
       >{props.placeholder}</label>
