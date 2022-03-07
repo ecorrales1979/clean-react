@@ -74,4 +74,14 @@ describe('SignUp', () => {
     FormHelpers.testMainError('Erro criando a conta')
     FormHelpers.testUrl('/signup')
   })
+
+  it('Should throw error if invalid data is returned', () => {
+    Http.mockSuccess({ invalidProperty: faker.datatype.uuid() }, 50)
+    simulateValidSubmit()
+    FormHelpers.testLoading()
+    cy.wait('@request')
+    FormHelpers.testMainError('Erro criando a conta')
+    FormHelpers.testLocalStorageItem('accessToken', true)
+    FormHelpers.testUrl('/signup')
+  })
 })
