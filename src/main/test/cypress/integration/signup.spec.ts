@@ -95,4 +95,12 @@ describe('SignUp', () => {
     FormHelpers.testLocalStorageItem('accessToken')
     FormHelpers.testUrl('/')
   })
+
+  it('Should prevent multiple submits', () => {
+    Http.mockSuccess({ accessToken: faker.datatype.uuid() }, 50)
+    populateFields()
+    cy.getByTestId('submit').dblclick()
+    cy.wait('@request')
+    FormHelpers.testHttpCallsCount(1)
+  })
 })
