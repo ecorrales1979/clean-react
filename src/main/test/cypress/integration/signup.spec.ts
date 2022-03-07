@@ -3,12 +3,16 @@ import faker from '@faker-js/faker'
 import * as Http from '../support/signup-mocks'
 import * as FormHelpers from '../support/form-helpers'
 
-const simulateValidSubmit = (): void => {
+const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName())
   cy.getByTestId('email').focus().type(faker.internet.email())
-  const password = faker.random.alphaNumeric(6)
+  const password = faker.random.alphaNumeric(5)
   cy.getByTestId('password').focus().type(password)
   cy.getByTestId('passwordConfirmation').focus().type(password)
+}
+
+const simulateValidSubmit = (): void => {
+  populateFields()
   cy.getByTestId('submit').click()
 }
 
@@ -44,14 +48,10 @@ describe('SignUp', () => {
   })
 
   it('Should present valid state if form is valid', () => {
-    cy.getByTestId('name').focus().type(faker.name.findName())
+    populateFields()
     FormHelpers.testInputStatus('name')
-    cy.getByTestId('email').focus().type(faker.internet.email())
     FormHelpers.testInputStatus('email')
-    const password = faker.random.alphaNumeric(5)
-    cy.getByTestId('password').focus().type(password)
     FormHelpers.testInputStatus('password')
-    cy.getByTestId('passwordConfirmation').focus().type(password)
     FormHelpers.testInputStatus('passwordConfirmation')
     cy.getByTestId('submit').should('not.be.disabled')
     cy.getByTestId('loading-wrap').should('not.have.descendants')
