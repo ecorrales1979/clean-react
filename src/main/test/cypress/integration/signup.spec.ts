@@ -1,3 +1,5 @@
+import faker from '@faker-js/faker'
+
 import * as FormHelpers from '../support/form-helpers'
 
 describe('SignUp', () => {
@@ -14,6 +16,19 @@ describe('SignUp', () => {
     FormHelpers.testInputStatus('password', 'Campo obrigatório')
     cy.getByTestId('passwordConfirmation').should('have.attr', 'readonly')
     FormHelpers.testInputStatus('passwordConfirmation', 'Campo obrigatório')
+    cy.getByTestId('submit').should('be.disabled')
+    cy.getByTestId('loading-wrap').should('not.have.descendants')
+  })
+
+  it('Should present error state if form is invalid', () => {
+    cy.getByTestId('name').focus().type(faker.random.alphaNumeric(1))
+    FormHelpers.testInputStatus('name', 'name is invalid')
+    cy.getByTestId('email').focus().type(faker.random.word())
+    FormHelpers.testInputStatus('email', 'email is invalid')
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(3))
+    FormHelpers.testInputStatus('password', 'password is invalid')
+    cy.getByTestId('passwordConfirmation').focus().type(faker.random.alphaNumeric(5))
+    FormHelpers.testInputStatus('passwordConfirmation', 'passwordConfirmation is invalid')
     cy.getByTestId('submit').should('be.disabled')
     cy.getByTestId('loading-wrap').should('not.have.descendants')
   })
