@@ -3,9 +3,13 @@ import faker from '@faker-js/faker'
 import * as Http from '../support/login-mocks'
 import * as FormHelpers from '../support/form-helpers'
 
-const simulateValidSubmit = (): void => {
+const populateFields = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email())
   cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+}
+
+const simulateValidSubmit = (): void => {
+  populateFields()
   cy.getByTestId('submit').click()
 }
 
@@ -34,9 +38,8 @@ describe('Login', () => {
   })
 
   it('Should present valid state if form is valid', () => {
-    cy.getByTestId('email').focus().type(faker.internet.email())
+    populateFields()
     FormHelpers.testInputStatus('email')
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     FormHelpers.testInputStatus('password')
     cy.getByTestId('submit').should('not.be.disabled')
     cy.getByTestId('loading-wrap').should('not.have.descendants')
@@ -92,8 +95,8 @@ describe('Login', () => {
 
   it('Should call submit if enter key is pressed', () => {
     Http.mockSuccess({ accessToken: faker.datatype.uuid() }, 50)
-    cy.getByTestId('email').focus().type(faker.internet.email())
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5)).type('{enter}')
+    populateFields()
+    cy.getByTestId('password').type('{enter}')
     FormHelpers.testHttpCallsCount(1)
   })
 
