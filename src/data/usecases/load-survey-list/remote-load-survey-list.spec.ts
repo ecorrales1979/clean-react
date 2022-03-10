@@ -34,4 +34,13 @@ describe('RemoteLoadSurveyList', () => {
     const result = sut.loadAll()
     await expect(result).rejects.toThrow(new UnexpectedError())
   })
+
+  it('Should throw UnexpectedError if HttpGetClient returns 404', async () => {
+    const { httpGetClientSpy, sut } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.notFound
+    }
+    const result = sut.loadAll()
+    await expect(result).rejects.toThrow(new UnexpectedError())
+  })
 })
