@@ -9,14 +9,16 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
     private readonly httpGetClient: HttpGetClient<SurveyModel[]>
   ) {}
 
+  private getResponseBody (body: SurveyModel[] = []): SurveyModel[] {
+    return body
+  }
+
   async loadAll (): Promise<SurveyModel[]> {
     const response = await this.httpGetClient.get({ url: this.url })
 
-    if (!response.body) throw new UnexpectedError()
-
     switch (response.statusCode) {
       case HttpStatusCode.success:
-        return response.body
+        return this.getResponseBody(response.body)
       default:
         throw new UnexpectedError()
     }
