@@ -1,6 +1,8 @@
 import faker from '@faker-js/faker'
 
 import {
+  HttpGetClient,
+  HttpGetParams,
   HttpPostClient,
   HttpPostParams,
   HttpResponse,
@@ -26,5 +28,12 @@ implements HttpPostClient<BodyType, ResponseType> {
     this.url = params.url
     this.body = params.body
     return await Promise.resolve(this.response)
+  }
+}
+
+export class HttpGetClientSpy implements HttpGetClient {
+  url?: string
+  async get (params: HttpGetParams): Promise<void> {
+    this.url = params.url
   }
 }
