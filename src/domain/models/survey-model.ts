@@ -5,6 +5,6 @@ export interface SurveyModel {
     image?: string
     answer: string
   }>
-  date: string
+  date: Date
   didAnswer: boolean
 }
