@@ -1,0 +1,149 @@
+@import "../../styles/colors.scss";
+
+.surveyListWrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $disabledBackground;
+
+  .headerWrap {
+    background-color: $primary;
+    border-top: 40px solid $primaryDark;
+
+    .headerContent {
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+      padding: 15px 40px;
+      color: $light;
+
+      img {
+        width: 60px;
+      }
+
+      .infoWrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+
+        span {
+          font-size: 1.3rem;
+          margin-bottom: 10px;
+        }
+
+        a {
+          color: $light;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .contentWrap {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+
+    h2 {
+      color: $primaryDark;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 100%;
+
+      li {
+        height: 250px;
+        background-color: $light;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-basis: 48%;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        box-shadow: 0 1px 3px -1px black;
+
+        .surveyContent {
+          display: flex;
+          justify-content: space-between;
+          flex-grow: 1;
+          background-repeat: no-repeat;
+          background-image:
+            linear-gradient(to right, rgba($primaryLight, 0.3), rgba($primaryLight, 0.2)),
+            linear-gradient(to right, $light, $light);
+          background-position: 0 0, 54 0;
+          background-size: 44px 100%, 100% 100%;
+
+          time {
+            background-color: $primaryLight;
+            color: $light;
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            border-radius: 8px;
+            margin-left: 1rem;
+            width: 60px;
+            height: 100px;
+            z-index: 1;
+
+            .day {
+              font-size: 3rem;
+              font-weight: 700;
+            }
+            .month {
+              font-size: 1.2rem;
+              text-transform: lowercase;
+              margin-bottom: 3px;
+            }
+            .year {
+              font-size: 1.5rem;
+            }
+          }
+
+          p {
+            font-size: 1.5rem;
+            margin: 1rem;
+            align-self: center;
+          }
+        }
+
+        footer {
+          background-color: $primary;
+          color: $light;
+          width: 100%;
+          text-align: center;
+          line-height: 3rem;
+          text-transform: lowercase;
+          cursor: pointer;
+          border-radius: 0 0 8px 8px;
+
+          &:hover {
+            background-color: $primaryDark
+          }
+        }
+      }
+    }
+  }
+}
