@@ -9,7 +9,7 @@ import {
   HttpStatusCode
 } from '@/data/protocols/http'
 
-export const mockHttpRequest = (): HttpPostParams<any> => ({
+export const mockPostRequest = (): HttpPostParams<any> => ({
   url: faker.internet.url(),
   body: faker.datatype.json()
 })
