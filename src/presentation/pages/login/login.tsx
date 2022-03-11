@@ -80,7 +80,7 @@ const Login: React.FC<Props> = ({ authentication, validation, saveAccessToken })
   }
 
   return (
-    <div className="login">
+    <div className="loginWrap">
       <Header />
       <FormContext.Provider value={{ state, setState }}>
         <form data-testid="login-form" className="form" onSubmit={handleSubmit}>
