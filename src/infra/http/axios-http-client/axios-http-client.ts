@@ -9,6 +9,13 @@ import {
 } from '@/data/protocols/http'
 
 export class AxiosHttpClient implements HttpPostClient<unknown, unknown>, HttpGetClient<unknown> {
+  private responseAdapter (response: AxiosResponse<any>): HttpResponse<any> {
+    return {
+      statusCode: response.status,
+      body: response.data
+    }
+  }
+
   async post (params: HttpPostParams<unknown>): Promise<HttpResponse<any>> {
     let axiosResponse: AxiosResponse<any>
 
@@ -18,10 +25,7 @@ export class AxiosHttpClient implements HttpPostClient<unknown, unknown>, HttpGe
       axiosResponse = error.response
     }
 
-    return {
-      statusCode: axiosResponse.status,
-      body: axiosResponse.data
-    }
+    return this.responseAdapter(axiosResponse)
   }
 
   async get (params: HttpGetParams): Promise<HttpResponse<any>> {
@@ -33,9 +37,6 @@ export class AxiosHttpClient implements HttpPostClient<unknown, unknown>, HttpGe
       axiosResponse = error.response
     }
 
-    return {
-      statusCode: axiosResponse.status,
-      body: axiosResponse.data
-    }
+    return this.responseAdapter(axiosResponse)
   }
 }
