@@ -46,12 +46,13 @@
           display: flex;
           justify-content: space-between;
           flex-grow: 1;
+          border-radius: 8px 8px 0 0;
           background-repeat: no-repeat;
           background-image:
-            linear-gradient(to right, rgba($primaryLight, 0.3), rgba($primaryLight, 0.2)),
+            linear-gradient(to right, rgba($primaryLight, 0.2), rgba($primaryLight, 0.2)),
             linear-gradient(to right, $light, $light);
           background-position: 0 0, 54 0;
-          background-size: 44px 100%, 100% 100%;
+          background-size: 54px 100%, 100% 100%;
           position: relative;
 
           .iconWrap {
@@ -70,7 +71,7 @@
             align-items: center;
             flex-shrink: 0;
             border-radius: 8px;
-            margin-left: 1rem;
+            margin: 24px;
             width: 60px;
             height: 100px;
             z-index: 1;
@@ -93,6 +94,7 @@
             font-size: 1.5rem;
             margin: 1rem;
             align-self: center;
+            flex-grow: 1;
           }
         }
 
@@ -109,6 +111,20 @@
           &:hover {
             background-color: $primaryDark
           }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyListWrap {
+    .contentWrap {
+      ul {
+        flex-direction: column;
+
+        li {
+          flex-basis: 100%;
         }
       }
     }
