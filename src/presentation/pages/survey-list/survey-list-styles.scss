@@ -6,46 +6,6 @@
   min-height: 100vh;
   background-color: $disabledBackground;
 
-  .headerWrap {
-    background-color: $primary;
-    border-top: 40px solid $primaryDark;
-
-    .headerContent {
-      max-width: 800px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 auto;
-      padding: 15px 40px;
-      color: $light;
-
-      img {
-        width: 60px;
-      }
-
-      .infoWrap {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-end;
-
-        span {
-          font-size: 1.3rem;
-          margin-bottom: 10px;
-        }
-
-        a {
-          color: $light;
-          text-decoration: none;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-  }
-
   .contentWrap {
     flex-grow: 1;
     display: flex;
