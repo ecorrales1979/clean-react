@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import './signup-styles.scss'
+import Styles from './signup-styles.scss'
 import { EmailInUseError } from '@/domain/errors'
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import {
@@ -99,17 +99,17 @@ const SignUp: React.FC<Props> = ({ addAccount, validation, saveAccessToken }) =>
   }
 
   return (
-    <div className="signupWrap">
+    <div className={Styles.signupWrap}>
       <Header />
       <FormContext.Provider value={{ state, setState }}>
-        <form data-testid="signup-form" className="form" onSubmit={handleSubmit}>
+        <form data-testid="signup-form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Criar conta</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
           <Input type="password" name="password" placeholder="Digite sua senha" />
           <Input type="password" name="passwordConfirmation" placeholder="Repita sua senha" />
           <SubmitButton>Cadastrar</SubmitButton>
-          <Link to="/login" data-testid="login" className="link">Voltar</Link>
+          <Link to="/login" data-testid="login" className={Styles.link}>Voltar</Link>
           <FormStatus />
         </form>
       </FormContext.Provider>

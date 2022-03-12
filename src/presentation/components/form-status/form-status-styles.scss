@@ -1,6 +1,6 @@
 @import '../../styles/colors.scss';
 
-.loading-wrap {
+.loadingWrap {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +10,7 @@
     margin-top: 30px;
   }
 
-  .error-msg {
+  .errorMsg {
     // display: none;
     margin-top: 30px;
     color: $primaryLight;

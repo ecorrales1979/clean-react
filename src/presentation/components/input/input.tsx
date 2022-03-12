@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import './input-styles.scss'
+import Styles from './input-styles.scss'
 import { FormContext } from '@/presentation/contexts'
 
 interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
@@ -13,7 +13,7 @@ const Input: React.FC<Props> = (props) => {
 
   return (
     <div
-      className="input-wrap"
+      className={Styles.inputWrap}
       data-status={error ? 'invalid' : 'valid'}
       data-testid={`${props.name}-wrap`}
     >
@@ -40,7 +40,7 @@ const Input: React.FC<Props> = (props) => {
       {/* {!!error && (
         <span
           data-testid={`${props.name}-error-message`}
-          className="input-error-message"
+          className={Styles.inputErrorMessage}
         >
           {error}
         </span>

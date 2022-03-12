@@ -1,6 +1,6 @@
 @import '../../styles/colors.scss';
 
-.input-wrap {
+.inputWrap {
   margin-top: 40px;
   border-bottom: 2px dashed $disabledColor;
   position: relative;
@@ -66,7 +66,7 @@
     transition: transform 0.4s ease;
   }
 
-  .input-status {
+  .inputStatus {
     position: absolute;
     right: 8px;
     font-size: 10px;

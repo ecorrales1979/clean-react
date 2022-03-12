@@ -1,14 +1,14 @@
 import React, { memo } from 'react'
 
-import './header-styles.scss'
+import Styles from './header-styles.scss'
 import { Logo } from '@/presentation/components'
 
 const Header: React.FC = () => {
   return (
-    <header className="headerWrap">
-      <div className="headerContent">
+    <header className={Styles.headerWrap}>
+      <div className={Styles.headerContent}>
         <Logo />
-        <div className="infoWrap">
+        <div className={Styles.infoWrap}>
           <span>Meu nome</span>
           <a href="#">Sair</a>
         </div>

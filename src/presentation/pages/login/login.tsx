@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import './login-styles.scss'
+import Styles from './login-styles.scss'
 import {
   Footer,
   FormStatus,
@@ -80,15 +80,15 @@ const Login: React.FC<Props> = ({ authentication, validation, saveAccessToken })
   }
 
   return (
-    <div className="loginWrap">
+    <div className={Styles.loginWrap}>
       <Header />
       <FormContext.Provider value={{ state, setState }}>
-        <form data-testid="login-form" className="form" onSubmit={handleSubmit}>
+        <form data-testid="login-form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
           <Input type="password" name="password" placeholder="Digite sua senha" />
           <SubmitButton>Entrar</SubmitButton>
-          <Link to="/signup" data-testid="signup-link" className="link">Criar conta</Link>
+          <Link to="/signup" data-testid="signup-link" className={Styles.link}>Criar conta</Link>
           <FormStatus />
         </form>
       </FormContext.Provider>
