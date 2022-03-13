@@ -18,24 +18,22 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LocalUpdateCurrentAccount', () => {
-  it('Should call SetStorage with correct value', async () => {
+  it('Should call SetStorage with correct value', () => {
     const account = mockAccountModel()
     const { sut, setStorageMock } = makeSut()
-    await sut.save(account)
+    sut.save(account)
     expect(setStorageMock.key).toBe('account')
     expect(setStorageMock.value).toBe(JSON.stringify(account))
   })
 
-  it('Should throw if SetStorage throws', async () => {
+  it('Should throw if SetStorage throws', () => {
     const { sut, setStorageMock } = makeSut()
-    jest.spyOn(setStorageMock, 'set').mockRejectedValueOnce(new Error())
-    const result = sut.save(mockAccountModel())
-    await expect(result).rejects.toThrow(new Error())
+    jest.spyOn(setStorageMock, 'set').mockImplementationOnce(() => { throw new Error() })
+    expect(() => sut.save(mockAccountModel())).toThrow(new Error())
   })
 
-  it('Should throw if account is falsy', async () => {
+  it('Should throw if account is falsy', () => {
     const { sut } = makeSut()
-    const result = sut.save(undefined)
-    await expect(result).rejects.toThrow(new UnexpectedError())
+    expect(() => sut.save(undefined)).toThrow(new UnexpectedError())
   })
 })

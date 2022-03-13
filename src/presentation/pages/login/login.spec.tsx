@@ -146,7 +146,7 @@ describe('Login page', () => {
   it('Should present error if UpdateCurrentAccount fails', async () => {
     const { sut, updateCurrentAccountMock } = makeSut()
     const error = new InvalidCredentialsError()
-    jest.spyOn(updateCurrentAccountMock, 'save').mockRejectedValueOnce(error)
+    jest.spyOn(updateCurrentAccountMock, 'save').mockImplementationOnce(() => { throw error })
     await simulateValidSubmit(sut)
     Helper.testChildCount(sut, 'loading-wrap', 1)
     Helper.testElementText(sut, 'main-error', error.message)
