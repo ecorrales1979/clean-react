@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import Styles from './login-styles.scss'
@@ -9,15 +9,14 @@ import {
   LoginHeader as Header,
   SubmitButton
 } from '@/presentation/components'
-import { FormContext } from '@/presentation/contexts'
+import { ApiContext, FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication, UpdateCurrentAccount } from '@/domain/usecases'
+import { Authentication } from '@/domain/usecases'
 import { InvalidCredentialsError } from '@/domain/errors'
 
 interface Props {
   validation: Validation
   authentication: Authentication
-  updateCurrentAccount: UpdateCurrentAccount
 }
 
 interface StateProps {
@@ -30,7 +29,7 @@ interface StateProps {
   mainError: string | null
 }
 
-const Login: React.FC<Props> = ({ authentication, validation, updateCurrentAccount }) => {
+const Login: React.FC<Props> = ({ authentication, validation }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     isFormInvalid: true,
@@ -41,6 +40,7 @@ const Login: React.FC<Props> = ({ authentication, validation, updateCurrentAccou
     mainError: ''
   })
   const navigate = useNavigate()
+  const { setCurrentAccount } = useContext(ApiContext)
 
   useEffect(() => {
     const formData = {
@@ -64,7 +64,7 @@ const Login: React.FC<Props> = ({ authentication, validation, updateCurrentAccou
     try {
       setState((oldState) => ({ ...oldState, isLoading: true }))
       const result = await authentication.auth({ email: state.email, password: state.password })
-      if (result) await updateCurrentAccount.save(result)
+      if (result) setCurrentAccount(result)
       navigate('/', { replace: true })
     } catch (error: unknown) {
       let errorMsg = 'Erro de autenticação'

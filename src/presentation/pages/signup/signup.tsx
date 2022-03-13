@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import Styles from './signup-styles.scss'
 import { EmailInUseError } from '@/domain/errors'
-import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases'
+import { AddAccount } from '@/domain/usecases'
 import {
   Footer,
   FormStatus,
@@ -11,13 +11,12 @@ import {
   LoginHeader as Header,
   SubmitButton
 } from '@/presentation/components'
-import { FormContext } from '@/presentation/contexts'
+import { ApiContext, FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
 
 interface Props {
   validation: Validation
   addAccount: AddAccount
-  updateCurrentAccount: UpdateCurrentAccount
 }
 
 interface StateProps {
@@ -34,7 +33,7 @@ interface StateProps {
   mainError: string | null
 }
 
-const SignUp: React.FC<Props> = ({ addAccount, validation, updateCurrentAccount }) => {
+const SignUp: React.FC<Props> = ({ addAccount, validation }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     isFormInvalid: true,
@@ -49,6 +48,7 @@ const SignUp: React.FC<Props> = ({ addAccount, validation, updateCurrentAccount 
     mainError: ''
   })
   const navigate = useNavigate()
+  const { setCurrentAccount } = useContext(ApiContext)
 
   useEffect(() => {
     const formData = {
@@ -83,7 +83,7 @@ const SignUp: React.FC<Props> = ({ addAccount, validation, updateCurrentAccount 
         password: state.password,
         passwordConfirmation: state.passwordConfirmation
       })
-      if (result) await updateCurrentAccount.save(result)
+      if (result) setCurrentAccount(result)
       navigate('/', { replace: true })
     } catch (error: unknown) {
       let errorMsg = 'Erro criando a conta'
