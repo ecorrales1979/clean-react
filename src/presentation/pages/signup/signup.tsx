@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import Styles from './signup-styles.scss'
 import { EmailInUseError } from '@/domain/errors'
-import { AddAccount, SaveAccessToken } from '@/domain/usecases'
+import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases'
 import {
   Footer,
   FormStatus,
@@ -17,7 +17,7 @@ import { Validation } from '@/presentation/protocols/validation'
 interface Props {
   validation: Validation
   addAccount: AddAccount
-  saveAccessToken: SaveAccessToken
+  updateCurrentAccount: UpdateCurrentAccount
 }
 
 interface StateProps {
@@ -34,7 +34,7 @@ interface StateProps {
   mainError: string | null
 }
 
-const SignUp: React.FC<Props> = ({ addAccount, validation, saveAccessToken }) => {
+const SignUp: React.FC<Props> = ({ addAccount, validation, updateCurrentAccount }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     isFormInvalid: true,
@@ -83,7 +83,7 @@ const SignUp: React.FC<Props> = ({ addAccount, validation, saveAccessToken }) =>
         password: state.password,
         passwordConfirmation: state.passwordConfirmation
       })
-      if (result) await saveAccessToken.save(result.accessToken)
+      if (result) await updateCurrentAccount.save(result)
       navigate('/', { replace: true })
     } catch (error: unknown) {
       let errorMsg = 'Erro criando a conta'

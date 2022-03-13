@@ -81,23 +81,29 @@ describe('SignUp', () => {
     FormHelpers.testLoading()
     cy.wait('@request')
     FormHelpers.testMainError('Erro criando a conta')
-    FormHelpers.testLocalStorageItem('accessToken', true)
+    FormHelpers.testLocalStorageItem('account', true)
     FormHelpers.testUrl('/signup')
   })
 
-  it('Should save accessToken if valid credentials are provided', () => {
-    Http.mockSuccess({ accessToken: faker.datatype.uuid() }, 50)
+  it('Should save account if valid credentials are provided', () => {
+    Http.mockSuccess({
+      accessToken: faker.datatype.uuid(),
+      name: faker.name.findName()
+    }, 50)
     simulateValidSubmit()
     FormHelpers.testLoading()
     cy.wait('@request')
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
-    FormHelpers.testLocalStorageItem('accessToken')
+    FormHelpers.testLocalStorageItem('account')
     FormHelpers.testUrl('/')
   })
 
   it('Should prevent multiple submits', () => {
-    Http.mockSuccess({ accessToken: faker.datatype.uuid() }, 50)
+    Http.mockSuccess({
+      accessToken: faker.datatype.uuid(),
+      name: faker.name.findName()
+    }, 50)
     populateFields()
     cy.getByTestId('submit').dblclick()
     cy.wait('@request')
@@ -105,14 +111,20 @@ describe('SignUp', () => {
   })
 
   it('Should call submit if enter key is pressed', () => {
-    Http.mockSuccess({ accessToken: faker.datatype.uuid() }, 50)
+    Http.mockSuccess({
+      accessToken: faker.datatype.uuid(),
+      name: faker.name.findName()
+    }, 50)
     populateFields()
     cy.getByTestId('passwordConfirmation').type('{enter}')
     FormHelpers.testHttpCallsCount(1)
   })
 
   it('Should prevent request to be called if form is invalid', () => {
-    Http.mockSuccess({ accessToken: faker.datatype.uuid() })
+    Http.mockSuccess({
+      accessToken: faker.datatype.uuid(),
+      name: faker.name.findName()
+    })
     cy.getByTestId('name').focus().type(faker.random.word())
     cy.getByTestId('email').focus().type(faker.random.word())
     cy.getByTestId('password')

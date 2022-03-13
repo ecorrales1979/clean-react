@@ -11,13 +11,13 @@ import {
 } from '@/presentation/components'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication, SaveAccessToken } from '@/domain/usecases'
+import { Authentication, UpdateCurrentAccount } from '@/domain/usecases'
 import { InvalidCredentialsError } from '@/domain/errors'
 
 interface Props {
   validation: Validation
   authentication: Authentication
-  saveAccessToken: SaveAccessToken
+  updateCurrentAccount: UpdateCurrentAccount
 }
 
 interface StateProps {
@@ -30,7 +30,7 @@ interface StateProps {
   mainError: string | null
 }
 
-const Login: React.FC<Props> = ({ authentication, validation, saveAccessToken }) => {
+const Login: React.FC<Props> = ({ authentication, validation, updateCurrentAccount }) => {
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     isFormInvalid: true,
@@ -64,7 +64,7 @@ const Login: React.FC<Props> = ({ authentication, validation, saveAccessToken })
     try {
       setState((oldState) => ({ ...oldState, isLoading: true }))
       const result = await authentication.auth({ email: state.email, password: state.password })
-      if (result) await saveAccessToken.save(result.accessToken)
+      if (result) await updateCurrentAccount.save(result)
       navigate('/', { replace: true })
     } catch (error: unknown) {
       let errorMsg = 'Erro de autenticação'
