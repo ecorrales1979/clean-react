@@ -4,7 +4,6 @@ import Styles from './survey-list-styles.scss'
 import { Footer, Header, Icon } from '@/presentation/components'
 
 const SurveyList: React.FC = () => {
-  console.log('styles', Styles)
   return (
     <div className={Styles.surveyListWrap}>
       <Header />
