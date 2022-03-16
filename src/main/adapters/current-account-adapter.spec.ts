@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker'
 
-import { setCurrentAccountAdapter } from './current-account-adapter'
+import { getCurrentAccountAdapter, setCurrentAccountAdapter } from './current-account-adapter'
 import { UnexpectedError } from '@/domain/errors'
 import { mockAccountModel } from '@/domain/mocks'
 import { AccountModel } from '@/domain/models'
@@ -13,7 +13,7 @@ describe('CurrentAccountAdapter', () => {
     () => jest.clearAllMocks()
   )
 
-  it('Should call LocalStorageAdapter with correct values', () => {
+  it('Should call LocalStorageAdapter.set with correct values', () => {
     const account = mockAccountModel()
     const setSpy = jest.spyOn(LocalStorageAdapter.prototype, 'set')
     setCurrentAccountAdapter(account)
@@ -25,5 +25,13 @@ describe('CurrentAccountAdapter', () => {
     const setSpy = jest.spyOn(LocalStorageAdapter.prototype, 'set')
     expect(() => setCurrentAccountAdapter(account)).toThrowError(new UnexpectedError())
     expect(setSpy).toHaveBeenCalledTimes(0)
+  })
+
+  it('Should call LocalStorageAdapter.get with correct value', () => {
+    const account = mockAccountModel()
+    const getSpy = jest.spyOn(LocalStorageAdapter.prototype, 'get').mockReturnValueOnce(account)
+    const result = getCurrentAccountAdapter()
+    expect(getSpy).toHaveBeenCalledWith('account')
+    expect(result).toEqual(account)
   })
 })
