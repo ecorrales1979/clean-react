@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '@/main/adapters'
 import { makeLogin as Login } from '@/main/factories/pages/login/login-factory'
 import { makeSignUp as SignUp } from '@/main/factories/pages/signup/signup-factory'
+import { PrivateRoute } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
 import { SurveyList } from '@/presentation/pages'
 
@@ -18,7 +19,7 @@ const Router: React.FC = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<SurveyList />} />
+          <Route path="/" element={<PrivateRoute><SurveyList /></PrivateRoute> } />
         </Routes>
       </BrowserRouter>
     </ApiContext.Provider>
