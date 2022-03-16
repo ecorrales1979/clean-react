@@ -1,32 +1,48 @@
 import React from 'react'
 import { Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistory } from 'history'
-import { render, RenderResult } from '@testing-library/react'
+import { cleanup, render, RenderResult } from '@testing-library/react'
 
 import PrivateRoute from './private-route'
+import { mockAccountModel } from '@/domain/mocks'
+import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '@/main/adapters'
+import { ApiContext } from '@/presentation/contexts'
+import { Login } from '@/presentation/pages'
 
 interface SutTypes {
   history: MemoryHistory
   sut: RenderResult
 }
 
-const makeSut = (): SutTypes => {
+const makeSut = (account: any = mockAccountModel()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] })
   const sut = render(
-    <HistoryRouter history={history}>
-      <Routes>
-        <Route path="/" element={<PrivateRoute />} />
-        <Route path="/login" />
-      </Routes>
-    </HistoryRouter>
+    <ApiContext.Provider value={{
+      setCurrentAccount: () => null,
+      getCurrentAccount: () => account
+    }}>
+      <HistoryRouter history={history}>
+        <Routes>
+          <Route path="/" element={<PrivateRoute>{Login}</PrivateRoute> } />
+          <Route path="/login" />
+        </Routes>
+      </HistoryRouter>
+    </ApiContext.Provider>
   )
 
   return { sut, history }
 }
 
 describe('PrivateRoute', () => {
+  afterEach(cleanup)
+
   it('Should redirect to /login if no accessToken is present', () => {
-    const { history } = makeSut()
+    const { history } = makeSut(null)
     expect(history.location.pathname).toBe('/login')
+  })
+
+  it('Should render desired component if accessToken is present', () => {
+    const { history } = makeSut()
+    expect(history.location.pathname).toBe('/')
   })
 })

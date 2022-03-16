@@ -8,6 +8,7 @@ import SignUp from './signup'
 import { EmailInUseError } from '@/domain/errors'
 import { Helper, ValidationSpy, AddAccountSpy } from '@/presentation/mocks'
 import { ApiContext } from '@/presentation/contexts'
+import { AccountModel } from '@/domain/models'
 
 interface SutTypes {
   sut: RenderResult
@@ -28,7 +29,8 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationSpy.errorMessage = params?.validationError ?? ''
   const sut = render(
     <ApiContext.Provider value={{
-      setCurrentAccount: setCurrentAccountMock
+      setCurrentAccount: setCurrentAccountMock,
+      getCurrentAccount: () => ({} as unknown as AccountModel)
     }}>
       <HistoryRouter history={history}>
         <SignUp

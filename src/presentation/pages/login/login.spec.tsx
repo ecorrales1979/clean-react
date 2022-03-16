@@ -8,6 +8,7 @@ import { InvalidCredentialsError } from '@/domain/errors'
 import { ApiContext } from '@/presentation/contexts'
 import { ValidationSpy, AuthenticationSpy, Helper } from '@/presentation/mocks'
 import { Login } from '@/presentation/pages'
+import { AccountModel } from '@/domain/models'
 
 interface SutTypes {
   sut: RenderResult
@@ -29,7 +30,8 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationSpy.errorMessage = params?.validationError ?? ''
   const sut = render(
     <ApiContext.Provider value={{
-      setCurrentAccount: setCurrentAccountMock
+      setCurrentAccount: setCurrentAccountMock,
+      getCurrentAccount: () => ({} as unknown as AccountModel)
     }}>
       <HistoryRouter history={history}>
         <Login
