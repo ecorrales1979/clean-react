@@ -1,7 +1,7 @@
 import React from 'react'
 import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import faker from '@faker-js/faker'
 
 import { InvalidCredentialsError } from '@/domain/errors'
@@ -57,8 +57,6 @@ const simulateValidSubmit = async (email = faker.internet.email(), password = fa
 }
 
 describe('Login page', () => {
-  afterEach(cleanup)
-
   it('Should start with initial state', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
