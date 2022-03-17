@@ -60,7 +60,7 @@ describe('Login page', () => {
   it('Should start with initial state', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
-    Helper.testChildCount('loading-wrap', 0)
+    expect(screen.getByTestId('loading-wrap').children).toHaveLength(0)
     expect(screen.getByTestId('submit')).toBeDisabled()
     Helper.testStatusForField('email', validationError)
     Helper.testStatusForField('password', validationError)
@@ -134,7 +134,7 @@ describe('Login page', () => {
     const error = new InvalidCredentialsError()
     jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error)
     await simulateValidSubmit()
-    Helper.testChildCount('loading-wrap', 1)
+    expect(screen.getByTestId('loading-wrap').children).toHaveLength(1)
     expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
   })
 
@@ -151,7 +151,7 @@ describe('Login page', () => {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     setCurrentAccountMock.mockImplementationOnce(() => { throw error })
     await simulateValidSubmit()
-    Helper.testChildCount('loading-wrap', 1)
+    expect(screen.getByTestId('loading-wrap').children).toHaveLength(1)
     expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
   })
 

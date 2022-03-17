@@ -64,7 +64,7 @@ describe('SignUp page', () => {
   it('Should start with initial state', () => {
     const validationError = 'Campo obrigatório'
     makeSut({ validationError })
-    Helper.testChildCount('loading-wrap', 0)
+    expect(screen.getByTestId('loading-wrap').children).toHaveLength(0)
     expect(screen.getByTestId('submit')).toBeDisabled()
     Helper.testStatusForField('name', validationError)
     Helper.testStatusForField('email', validationError)
@@ -175,7 +175,7 @@ describe('SignUp page', () => {
     jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
     await simulateValidSubmit()
     expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
-    Helper.testChildCount('loading-wrap', 1)
+    expect(screen.getByTestId('loading-wrap').children).toHaveLength(1)
   })
 
   it('Should call SetCurrentAccount and redirect to home page on success', async () => {
@@ -190,7 +190,7 @@ describe('SignUp page', () => {
     const error = new EmailInUseError()
     setCurrentAccountMock.mockImplementationOnce(() => { throw (error) })
     await simulateValidSubmit()
-    Helper.testChildCount('loading-wrap', 1)
+    expect(screen.getByTestId('loading-wrap').children).toHaveLength(1)
     expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
   })
 
