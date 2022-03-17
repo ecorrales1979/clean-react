@@ -1,22 +1,20 @@
 import React from 'react'
 import { Route, Routes, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistory } from 'history'
-import { cleanup, render, RenderResult } from '@testing-library/react'
+import { render } from '@testing-library/react'
 
 import PrivateRoute from './private-route'
 import { mockAccountModel } from '@/domain/mocks'
-import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '@/main/adapters'
 import { ApiContext } from '@/presentation/contexts'
 import { Login } from '@/presentation/pages'
 
 interface SutTypes {
   history: MemoryHistory
-  sut: RenderResult
 }
 
 const makeSut = (account: any = mockAccountModel()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] })
-  const sut = render(
+  render(
     <ApiContext.Provider value={{
       setCurrentAccount: () => null,
       getCurrentAccount: () => account
@@ -30,12 +28,10 @@ const makeSut = (account: any = mockAccountModel()): SutTypes => {
     </ApiContext.Provider>
   )
 
-  return { sut, history }
+  return { history }
 }
 
 describe('PrivateRoute', () => {
-  afterEach(cleanup)
-
   it('Should redirect to /login if no accessToken is present', () => {
     const { history } = makeSut(null)
     expect(history.location.pathname).toBe('/login')
