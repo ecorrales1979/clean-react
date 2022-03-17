@@ -135,7 +135,7 @@ describe('Login page', () => {
     jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error)
     await simulateValidSubmit()
     Helper.testChildCount('loading-wrap', 1)
-    Helper.testElementText('main-error', error.message)
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
   })
 
   it('Should call SetCurrentAccount and redirect to home page on success', async () => {
@@ -152,7 +152,7 @@ describe('Login page', () => {
     setCurrentAccountMock.mockImplementationOnce(() => { throw error })
     await simulateValidSubmit()
     Helper.testChildCount('loading-wrap', 1)
-    Helper.testElementText('main-error', error.message)
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
   })
 
   it('Should go to signup page', () => {

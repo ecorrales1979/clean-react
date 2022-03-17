@@ -174,7 +174,7 @@ describe('SignUp page', () => {
     const error = new EmailInUseError()
     jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
     await simulateValidSubmit()
-    Helper.testElementText('main-error', error.message)
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
     Helper.testChildCount('loading-wrap', 1)
   })
 
@@ -191,7 +191,7 @@ describe('SignUp page', () => {
     setCurrentAccountMock.mockImplementationOnce(() => { throw (error) })
     await simulateValidSubmit()
     Helper.testChildCount('loading-wrap', 1)
-    Helper.testElementText('main-error', error.message)
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
   })
 
   it('Should go to login page', () => {
