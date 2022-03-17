@@ -3,11 +3,11 @@ import { fireEvent, screen } from '@testing-library/react'
 
 export const testStatusForField = (fieldName: string, validationError?: string): void => {
   const wrap = screen.getByTestId(`${fieldName}-wrap`)
-  expect(wrap.getAttribute('data-status')).toBe(validationError ? 'invalid' : 'valid')
+  expect(wrap).toHaveAttribute('data-status', validationError ? 'invalid' : 'valid')
   const field = screen.getByTestId(fieldName)
-  expect(field.title).toBe(validationError ?? '')
+  expect(field).toHaveProperty('title', validationError ?? '')
   const label = screen.getByTestId(`${fieldName}-label`)
-  expect(label.title).toBe(validationError ?? '')
+  expect(label).toHaveProperty('title', validationError ?? '')
 }
 
 export const populateField = (fieldName: string, value = faker.random.word()): void => {
