@@ -136,7 +136,7 @@ describe('SignUp page', () => {
   it('show spinner on submit', async () => {
     makeSut()
     await simulateValidSubmit()
-    Helper.testElementExists('spinner')
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument()
   })
 
   it('should call AddAccount with correct values', async () => {
