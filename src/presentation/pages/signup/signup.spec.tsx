@@ -65,7 +65,7 @@ describe('SignUp page', () => {
     const validationError = 'Campo obrigatório'
     makeSut({ validationError })
     Helper.testChildCount('loading-wrap', 0)
-    Helper.testButtonIsDisabled('submit', true)
+    expect(screen.getByTestId('submit')).toBeDisabled()
     Helper.testStatusForField('name', validationError)
     Helper.testStatusForField('email', validationError)
     Helper.testStatusForField('password', validationError)
@@ -130,7 +130,7 @@ describe('SignUp page', () => {
     Helper.populateField('email')
     Helper.populateField('password')
     Helper.populateField('passwordConfirmation')
-    Helper.testButtonIsDisabled('submit', false)
+    expect(screen.getByTestId('submit')).toBeEnabled()
   })
 
   it('show spinner on submit', async () => {

@@ -61,7 +61,7 @@ describe('Login page', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.testChildCount('loading-wrap', 0)
-    Helper.testButtonIsDisabled('submit', true)
+    expect(screen.getByTestId('submit')).toBeDisabled()
     Helper.testStatusForField('email', validationError)
     Helper.testStatusForField('password', validationError)
   })
@@ -96,7 +96,7 @@ describe('Login page', () => {
     makeSut()
     Helper.populateField('email')
     Helper.populateField('password')
-    Helper.testButtonIsDisabled('submit', false)
+    expect(screen.getByTestId('submit')).toBeEnabled()
   })
 
   it('show spinner on submit', async () => {

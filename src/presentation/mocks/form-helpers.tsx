@@ -6,11 +6,6 @@ export const testChildCount = (fieldName: string, count: number): void => {
   expect(element.childElementCount).toBe(count)
 }
 
-export const testButtonIsDisabled = (fieldName: string, isDisabled: boolean): void => {
-  const element = screen.getByTestId<HTMLButtonElement>(fieldName)
-  expect(element.disabled).toBe(isDisabled)
-}
-
 export const testStatusForField = (fieldName: string, validationError?: string): void => {
   const wrap = screen.getByTestId(`${fieldName}-wrap`)
   expect(wrap.getAttribute('data-status')).toBe(validationError ? 'invalid' : 'valid')
