@@ -10,8 +10,7 @@ const SurveyList: React.FC = () => {
       <Header />
       <div className={Styles.contentWrap}>
         <h2>Enquete</h2>
-        <ul>
-          <SurveyItem />
+        <ul data-testid="survey-list">
           <SurveyItemEmpty />
         </ul>
       </div>
