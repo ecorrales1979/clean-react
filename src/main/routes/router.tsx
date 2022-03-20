@@ -3,11 +3,13 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '@/main/adapters'
-import { makeLogin as Login } from '@/main/factories/pages/login/login-factory'
-import { makeSignUp as SignUp } from '@/main/factories/pages/signup/signup-factory'
+import {
+  makeLogin as Login,
+  makeSignUp as SignUp,
+  makeSurveyList as SurveyList
+} from '@/main/factories/pages'
 import { PrivateRoute } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
-import { SurveyList } from '@/presentation/pages'
 
 const Router: React.FC = () => {
   return (
