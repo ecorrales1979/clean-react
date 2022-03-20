@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { SurveyItem, SurveyItemEmpty } from './components'
 import Styles from './survey-list-styles.scss'
+import { SurveyModel } from '@/domain/models'
 import { LoadSurveyList } from '@/domain/usecases'
 import { Footer, Header } from '@/presentation/components'
 
@@ -10,8 +11,14 @@ interface Props {
 }
 
 const SurveyList: React.FC<Props> = ({ loadSurveyList }) => {
+  const [state, setState] = useState({
+    surveys: [] as SurveyModel[]
+  })
+
   useEffect(() => {
-    loadSurveyList.loadAll().catch(error => console.error(error))
+    loadSurveyList.loadAll()
+      .then(surveys => setState(old => ({ ...old, surveys })))
+      .catch(error => console.error(error))
   }, [])
 
   return (
@@ -20,7 +27,10 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }) => {
       <div className={Styles.contentWrap}>
         <h2>Enquete</h2>
         <ul data-testid="survey-list">
-          <SurveyItemEmpty />
+          {state.surveys.length
+            ? state.surveys.map(survey => <SurveyItem key={survey.id} survey={survey} />)
+            : <SurveyItemEmpty />
+          }
         </ul>
       </div>
       <Footer />
