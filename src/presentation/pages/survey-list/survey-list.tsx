@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { SurveyItem, SurveyItemEmpty } from './components'
+import { SurveyContext, SurveyError, SurveyListItem } from './components'
 import Styles from './survey-list-styles.scss'
 import { SurveyModel } from '@/domain/models'
 import { LoadSurveyList } from '@/domain/usecases'
@@ -27,21 +27,9 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }) => {
       <Header />
       <div className={Styles.contentWrap}>
         <h2>Enquete</h2>
-        {state.error
-          ? (
-          <div>
-            <span data-testid="error">{state.error}</span>
-            <button>Recarregar</button>
-          </div>
-            )
-          : (
-          <ul data-testid="survey-list">
-            {state.surveys.length
-              ? state.surveys.map(survey => <SurveyItem key={survey.id} survey={survey} />)
-              : <SurveyItemEmpty />
-            }
-          </ul>
-            )}
+        <SurveyContext.Provider value={{ state, setState }}>
+        {state.error ? <SurveyError /> : <SurveyListItem />}
+        </SurveyContext.Provider>
       </div>
       <Footer />
     </div>
