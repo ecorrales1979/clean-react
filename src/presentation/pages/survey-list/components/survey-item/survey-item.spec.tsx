@@ -29,4 +29,15 @@ describe('SurveyList component', () => {
     expect(screen.getByTestId('month')).toHaveTextContent(/^jan$/i)
     expect(screen.getByTestId('year')).toHaveTextContent('2020')
   })
+
+  it('Should render with correct day and icon', () => {
+    makeSut({
+      didAnswer: false,
+      date: new Date('2019-05-03T00:00:00')
+    })
+    expect(screen.getByTestId('icon')).toHaveProperty('src', IconNameEnum.thumbDown)
+    expect(screen.getByTestId('day')).toHaveTextContent('03')
+    expect(screen.getByTestId('month')).toHaveTextContent(/^mai$/i)
+    expect(screen.getByTestId('year')).toHaveTextContent('2019')
+  })
 })
