@@ -50,4 +50,20 @@ describe('AuthorizeHttpGetClientDecorator', () => {
       'x-access-token': getStorageSpy.value.accessToken
     })
   })
+
+  it('Should merge headers to HttpGetClient', async () => {
+    const field = faker.random.words()
+    const httpRequest: HttpGetParams = {
+      url: faker.internet.url(),
+      headers: { field }
+    }
+    const { getStorageSpy, httpGetClientSpy, sut } = makeSut()
+    getStorageSpy.value = mockAccountModel()
+    await sut.get(httpRequest)
+    expect(httpGetClientSpy.url).toBe(httpRequest.url)
+    expect(httpGetClientSpy.headers).toEqual({
+      field,
+      'x-access-token': getStorageSpy.value.accessToken
+    })
+  })
 })
