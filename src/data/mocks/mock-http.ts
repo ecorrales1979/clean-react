@@ -38,12 +38,14 @@ implements HttpPostClient<BodyType, ResponseType> {
 
 export class HttpGetClientSpy<ResponseType> implements HttpGetClient<ResponseType> {
   url?: string
+  headers?: any
   response: HttpResponse<ResponseType> = {
     statusCode: HttpStatusCode.success
   }
 
   async get (params: HttpGetParams): Promise<HttpResponse<ResponseType>> {
     this.url = params.url
+    this.headers = params.headers
     return this.response
   }
 }
