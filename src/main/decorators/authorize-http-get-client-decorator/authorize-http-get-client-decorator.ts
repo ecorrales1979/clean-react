@@ -17,7 +17,6 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient<any> {
         }
       })
     }
-    await this.httpGetClientSpy.get(params)
-    return await Promise.resolve({} as unknown as HttpResponse<any>)
+    return await this.httpGetClientSpy.get(params)
   }
 }
