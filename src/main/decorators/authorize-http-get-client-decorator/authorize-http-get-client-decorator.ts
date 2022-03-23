@@ -11,7 +11,10 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient<any> {
     const account = this.getStorage.get('account')
     if (account?.accessToken) {
       Object.assign(params, {
-        headers: { 'x-access-token': account.accessToken }
+        headers: {
+          ...params.headers,
+          'x-access-token': account.accessToken
+        }
       })
     }
     await this.httpGetClientSpy.get(params)
