@@ -8,7 +8,7 @@ import SignUp from './signup'
 import { EmailInUseError } from '@/domain/errors'
 import { Helper, ValidationSpy, AddAccountSpy } from '@/presentation/mocks'
 import { ApiContext } from '@/presentation/contexts'
-import { AccountModel } from '@/domain/models'
+import { AddAccount } from '@/domain/usecases'
 
 interface SutTypes {
   addAccountSpy: AddAccountSpy
@@ -29,7 +29,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   render(
     <ApiContext.Provider value={{
       setCurrentAccount: setCurrentAccountMock,
-      getCurrentAccount: () => ({} as unknown as AccountModel)
+      getCurrentAccount: () => ({} as unknown as AddAccount.Model)
     }}>
       <HistoryRouter history={history}>
         <SignUp

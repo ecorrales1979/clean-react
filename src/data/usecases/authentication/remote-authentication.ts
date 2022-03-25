@@ -1,24 +1,27 @@
 import { HttpPostClient, HttpStatusCode } from '@/data/protocols/http'
-import { Authentication, AuthenticationParams } from '@/domain/usecases'
+import { Authentication } from '@/domain/usecases'
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
-import { AccountModel } from '@/domain/models'
 
 export class RemoteAuthentication implements Authentication {
   constructor (
     private readonly url: string,
-    private readonly httpPostClient: HttpPostClient<AuthenticationParams, AccountModel>
+    private readonly httpPostClient: HttpPostClient<Authentication.Params, RemoteAuthentication.Model>
   ) {}
 
-  async auth (params: AuthenticationParams): Promise<AccountModel | undefined> {
+  async auth (params: Authentication.Params): Promise<Authentication.Model> {
     const response = await this.httpPostClient.post({ url: this.url, body: params })
 
     switch (response.statusCode) {
       case HttpStatusCode.unauthorized:
         throw new InvalidCredentialsError()
       case HttpStatusCode.success:
-        return response.body
+        return response.body as Authentication.Model
       default:
         throw new UnexpectedError()
     }
   }
+}
+
+export namespace RemoteAuthentication {
+  export type Model = Authentication.Model
 }

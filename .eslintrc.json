@@ -18,9 +18,11 @@
   },
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
+    "import/export": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
   },

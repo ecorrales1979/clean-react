@@ -2,15 +2,15 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 
 import { mockSurveyModel } from '@/domain/mocks'
-import { SurveyModel } from '@/domain/models'
+import { LoadSurveyList } from '@/domain/usecases'
 import { IconNameEnum } from '@/presentation/components'
 import { SurveyItem } from '@/presentation/pages/survey-list/components'
 
 interface SutTypes {
-  survey: SurveyModel
+  survey: LoadSurveyList.Model
 }
 
-const makeSut = (data: Partial<SurveyModel>): SutTypes => {
+const makeSut = (data: Partial<LoadSurveyList.Model>): SutTypes => {
   const survey = mockSurveyModel()
   Object.assign(survey, data)
   render(<SurveyItem survey={survey} />)
