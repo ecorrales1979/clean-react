@@ -4,7 +4,7 @@ import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 
 import { UnexpectedError } from '@/domain/errors'
-import { mockSurveyList } from '@/domain/mocks'
+import { mockAccountModel, mockSurveyList } from '@/domain/mocks'
 import { LoadSurveyList } from '@/domain/usecases'
 import { SurveyList } from '@/presentation/pages'
 import { ApiContext } from '@/presentation/contexts'
@@ -21,7 +21,7 @@ const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): void => {
   render(
     <ApiContext.Provider value={{
       setCurrentAccount: jest.fn(),
-      getCurrentAccount: jest.fn()
+      getCurrentAccount: () => mockAccountModel()
     }}>
         <HistoryRouter history={createMemoryHistory()}>
           <SurveyList loadSurveyList={loadSurveyListSpy} />

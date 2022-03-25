@@ -7,7 +7,7 @@ import { ApiContext } from '@/presentation/contexts'
 import { Authentication } from '@/domain/usecases'
 
 const Header: React.FC = () => {
-  const { setCurrentAccount } = useContext(ApiContext)
+  const { getCurrentAccount, setCurrentAccount } = useContext(ApiContext)
   const navigate = useNavigate()
 
   const logout = (): void => {
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       <div className={Styles.headerContent}>
         <Logo />
         <div className={Styles.infoWrap}>
-          <span>Meu nome</span>
+          <span data-testid="username">{getCurrentAccount().name}</span>
           <a data-testid="logout" href="#" onClick={logout}>Sair</a>
         </div>
       </div>
