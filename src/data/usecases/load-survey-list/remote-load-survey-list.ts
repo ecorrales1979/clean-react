@@ -8,8 +8,10 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
     private readonly httpGetClient: HttpGetClient<RemoteLoadSurveyList.Model[]>
   ) {}
 
-  private getResponseBody (body: LoadSurveyList.Model[] = []): LoadSurveyList.Model[] {
-    return body
+  private getResponseBody (
+    body: RemoteLoadSurveyList.Model[] | undefined = []
+  ): LoadSurveyList.Model[] {
+    return body.map(remoteSurvey => Object.assign(remoteSurvey, { date: new Date(remoteSurvey.date) }))
   }
 
   async loadAll (): Promise<LoadSurveyList.Model[]> {
@@ -26,5 +28,7 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
 }
 
 export namespace RemoteLoadSurveyList {
-  export type Model = LoadSurveyList.Model
+  export type Model = Omit<LoadSurveyList.Model, 'date'> & {
+    date: string
+  }
 }
