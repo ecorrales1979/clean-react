@@ -5,10 +5,8 @@ import { render } from '@testing-library/react'
 
 import PrivateRoute from './private-route'
 import { mockAccountModel } from '@/domain/mocks'
-import { Authentication } from '@/domain/usecases'
 import { ApiContext } from '@/presentation/contexts'
-import { Login, SurveyList } from '@/presentation/pages'
-import { Validation } from '@/presentation/protocols/validation'
+import { Login } from '@/presentation/pages'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/mocks'
 
 interface SutTypes {
