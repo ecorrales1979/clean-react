@@ -2,6 +2,7 @@ import faker from '@faker-js/faker'
 
 import * as Http from '../support/signup-mocks'
 import * as FormHelpers from '../support/form-helpers'
+import * as Helpers from '../support/helpers'
 
 const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName())
@@ -63,7 +64,7 @@ describe('SignUp', () => {
     FormHelpers.testLoading()
     cy.wait('@request')
     FormHelpers.testMainError('Esse e-mail já está em uso')
-    FormHelpers.testUrl('/signup')
+    Helpers.testUrl('/signup')
   })
 
   it('Should present UnexpectedError on error cases', () => {
@@ -72,7 +73,7 @@ describe('SignUp', () => {
     FormHelpers.testLoading()
     cy.wait('@request')
     FormHelpers.testMainError('Erro criando a conta')
-    FormHelpers.testUrl('/signup')
+    Helpers.testUrl('/signup')
   })
 
   it('Should save account if valid credentials are provided', () => {
@@ -82,8 +83,8 @@ describe('SignUp', () => {
     cy.wait('@request')
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
-    FormHelpers.testLocalStorageItem('account')
-    FormHelpers.testUrl('/')
+    Helpers.testLocalStorageItem('account')
+    Helpers.testUrl('/')
   })
 
   it('Should prevent multiple submits', () => {
@@ -91,14 +92,14 @@ describe('SignUp', () => {
     populateFields()
     cy.getByTestId('submit').dblclick()
     cy.wait('@request')
-    FormHelpers.testHttpCallsCount(1)
+    Helpers.testHttpCallsCount(1)
   })
 
   it('Should call submit if enter key is pressed', () => {
     Http.mockSuccess(50)
     populateFields()
     cy.getByTestId('passwordConfirmation').type('{enter}')
-    FormHelpers.testHttpCallsCount(1)
+    Helpers.testHttpCallsCount(1)
   })
 
   it('Should prevent request to be called if form is invalid', () => {
@@ -112,6 +113,6 @@ describe('SignUp', () => {
       .focus()
       .type(faker.random.alphaNumeric(5))
       .type('{enter}')
-    FormHelpers.testHttpCallsCount(0)
+    Helpers.testHttpCallsCount(0)
   })
 })

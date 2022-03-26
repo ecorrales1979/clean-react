@@ -2,6 +2,7 @@ import faker from '@faker-js/faker'
 
 import * as Http from '../support/login-mocks'
 import * as FormHelpers from '../support/form-helpers'
+import * as Helpers from '../support/helpers'
 
 const populateFields = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email())
@@ -51,7 +52,7 @@ describe('Login', () => {
     FormHelpers.testLoading()
     cy.wait('@request')
     FormHelpers.testMainError('Credenciais inválidas')
-    FormHelpers.testUrl('/login')
+    Helpers.testUrl('/login')
   })
 
   it('Should present UnexpectedError on 400', () => {
@@ -60,7 +61,7 @@ describe('Login', () => {
     FormHelpers.testLoading()
     cy.wait('@request')
     FormHelpers.testMainError('Erro de autenticação')
-    FormHelpers.testUrl('/login')
+    Helpers.testUrl('/login')
   })
 
   it('Should save account if valid credentials are provided', () => {
@@ -70,8 +71,8 @@ describe('Login', () => {
     cy.wait('@request')
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
-    FormHelpers.testLocalStorageItem('account')
-    FormHelpers.testUrl('/')
+    Helpers.testLocalStorageItem('account')
+    Helpers.testUrl('/')
   })
 
   it('Should prevent multiple submits', () => {
@@ -80,20 +81,20 @@ describe('Login', () => {
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').dblclick()
     cy.wait('@request')
-    FormHelpers.testHttpCallsCount(1)
+    Helpers.testHttpCallsCount(1)
   })
 
   it('Should call submit if enter key is pressed', () => {
     Http.mockSuccess(50)
     populateFields()
     cy.getByTestId('password').type('{enter}')
-    FormHelpers.testHttpCallsCount(1)
+    Helpers.testHttpCallsCount(1)
   })
 
   it('Should prevent request to be called if form is invalid', () => {
     Http.mockSuccess()
     cy.getByTestId('email').focus().type(faker.random.word())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5)).type('{enter}')
-    FormHelpers.testHttpCallsCount(0)
+    Helpers.testHttpCallsCount(0)
   })
 })
