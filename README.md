@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-This project is the result of a training by Rodrigo Manguinho available at [Udemy](https://www.udemy.com/course/react-com-mango/). The training is focused in learn how to develop with ReactJS using hooks, recoil, TDD and Clean Code.
+This project is the result of a training by Rodrigo Manguinho available at [Udemy](https://www.udemy.com/course/react-com-mango/). The training is focused in learn how to develop a web application with ReactJS using hooks, recoil, TDD and Clean Code.
 
 ## Installation
 
