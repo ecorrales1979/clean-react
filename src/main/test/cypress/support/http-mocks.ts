@@ -2,7 +2,7 @@ import faker from '@faker-js/faker'
 
 type HttpMethod = 'GET' | 'POST'
 
-export const mockInvalidCredentialsError = (
+export const mockUnauthorizedError = (
   url: RegExp,
   delay?: number
 ): void => {
@@ -13,15 +13,19 @@ export const mockInvalidCredentialsError = (
   }).as('request')
 }
 
-export const mockEmailInUseError = (url: RegExp, delay?: number): void => {
-  cy.intercept('POST', url, {
+export const mockForbiddenError = (
+  url: RegExp,
+  method: HttpMethod,
+  delay?: number
+): void => {
+  cy.intercept(method, url, {
     statusCode: 403,
     body: { error: faker.random.words() },
     delay
   }).as('request')
 }
 
-export const mockUnexpectedError = (
+export const mockServerError = (
   url: RegExp,
   method: HttpMethod,
   delay?: number

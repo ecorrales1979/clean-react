@@ -1,17 +1,17 @@
 import faker from '@faker-js/faker'
 
-import * as Helper from './http-mocks'
+import * as Http from './http-mocks'
 
 export const mockEmailInUseError = (delay?: number): void => {
-  Helper.mockEmailInUseError(/signup/, delay)
+  Http.mockForbiddenError(/signup/, 'POST', delay)
 }
 
 export const mockUnexpectedError = (delay?: number): void => {
-  Helper.mockUnexpectedError(/signup/, 'POST', delay)
+  Http.mockServerError(/signup/, 'POST', delay)
 }
 
 export const mockSuccess = (delay?: number): void => {
-  Helper.mockSuccess(
+  Http.mockSuccess(
     /signup/,
     'POST',
     { accessToken: faker.datatype.uuid(), name: faker.name.findName() },
