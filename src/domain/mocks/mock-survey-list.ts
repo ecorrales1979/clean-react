@@ -9,10 +9,10 @@ export const mockSurveyModel = (): LoadSurveyList.Model => ({
   didAnswer: faker.datatype.boolean()
 })
 
-export const mockSurveyList = (quantity = 1): LoadSurveyList.Model[] => {
-  const models = []
-  for (let i = 0; i < quantity; i++) {
-    models.push(mockSurveyModel())
-  }
-  return models
+export const mockSurveyList = (): LoadSurveyList.Model[] => {
+  return [
+    mockSurveyModel(),
+    mockSurveyModel(),
+    mockSurveyModel()
+  ]
 }

@@ -10,7 +10,7 @@ import { SurveyList } from '@/presentation/pages'
 import { ApiContext } from '@/presentation/contexts'
 
 class LoadSurveyListSpy implements LoadSurveyList {
-  surveys = mockSurveyList(3)
+  surveys = mockSurveyList()
   async loadAll (): Promise<LoadSurveyList.Model[]> {
     return this.surveys
   }
