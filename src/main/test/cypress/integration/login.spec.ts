@@ -63,21 +63,8 @@ describe('Login', () => {
     FormHelpers.testUrl('/login')
   })
 
-  it('Should throw error if invalid data is returned', () => {
-    Http.mockSuccess({ invalidProperty: faker.datatype.uuid() }, 50)
-    simulateValidSubmit()
-    FormHelpers.testLoading()
-    cy.wait('@request')
-    FormHelpers.testMainError('Erro de autenticação')
-    FormHelpers.testLocalStorageItem('account', true)
-    FormHelpers.testUrl('/login')
-  })
-
   it('Should save account if valid credentials are provided', () => {
-    Http.mockSuccess({
-      accessToken: faker.datatype.uuid(),
-      name: faker.name.findName()
-    }, 50)
+    Http.mockSuccess(50)
     simulateValidSubmit()
     FormHelpers.testLoading()
     cy.wait('@request')
@@ -88,10 +75,7 @@ describe('Login', () => {
   })
 
   it('Should prevent multiple submits', () => {
-    Http.mockSuccess({
-      accessToken: faker.datatype.uuid(),
-      name: faker.name.findName()
-    }, 50)
+    Http.mockSuccess(50)
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').dblclick()
@@ -100,20 +84,14 @@ describe('Login', () => {
   })
 
   it('Should call submit if enter key is pressed', () => {
-    Http.mockSuccess({
-      accessToken: faker.datatype.uuid(),
-      name: faker.name.findName()
-    }, 50)
+    Http.mockSuccess(50)
     populateFields()
     cy.getByTestId('password').type('{enter}')
     FormHelpers.testHttpCallsCount(1)
   })
 
   it('Should prevent request to be called if form is invalid', () => {
-    Http.mockSuccess({
-      accessToken: faker.datatype.uuid(),
-      name: faker.name.findName()
-    })
+    Http.mockSuccess()
     cy.getByTestId('email').focus().type(faker.random.word())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5)).type('{enter}')
     FormHelpers.testHttpCallsCount(0)
