@@ -4,17 +4,9 @@ import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistory } from 'history'
 
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
-import { mockAccountModel, mockSurveyList } from '@/domain/mocks'
-import { LoadSurveyList } from '@/domain/usecases'
+import { LoadSurveyListSpy, mockAccountModel } from '@/domain/mocks'
 import { SurveyList } from '@/presentation/pages'
 import { ApiContext } from '@/presentation/contexts'
-
-class LoadSurveyListSpy implements LoadSurveyList {
-  surveys = mockSurveyList()
-  async loadAll (): Promise<LoadSurveyList.Model[]> {
-    return this.surveys
-  }
-}
 
 interface SutType {
   history: MemoryHistory
