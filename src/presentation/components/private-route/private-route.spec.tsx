@@ -5,8 +5,11 @@ import { render } from '@testing-library/react'
 
 import PrivateRoute from './private-route'
 import { mockAccountModel } from '@/domain/mocks'
+import { Authentication } from '@/domain/usecases'
 import { ApiContext } from '@/presentation/contexts'
-import { Login } from '@/presentation/pages'
+import { Login, SurveyList } from '@/presentation/pages'
+import { Validation } from '@/presentation/protocols/validation'
+import { AuthenticationSpy, ValidationSpy } from '@/presentation/mocks'
 
 interface SutTypes {
   history: MemoryHistory
@@ -21,8 +24,20 @@ const makeSut = (account: any = mockAccountModel()): SutTypes => {
     }}>
       <HistoryRouter history={history}>
         <Routes>
-          <Route path="/" element={<PrivateRoute>{Login}</PrivateRoute> } />
-          <Route path="/login" />
+          <Route path="/" element={<PrivateRoute>
+            {<Login
+              authentication={new AuthenticationSpy()}
+              validation={new ValidationSpy()}
+            />}
+          </PrivateRoute> } />
+          {/* <Route path="/login" element={<PrivateRoute>{Login}</PrivateRoute> } /> */}
+          <Route
+            path="/login"
+            element={<Login
+              authentication={new AuthenticationSpy()}
+              validation={new ValidationSpy()}
+            />}
+          />
         </Routes>
       </HistoryRouter>
     </ApiContext.Provider>
