@@ -1,18 +1,16 @@
 import React, { memo, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import Styles from './header-styles.scss'
 import { Logo } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
-import { Authentication } from '@/domain/usecases'
+import { useLogout } from '@/presentation/hooks'
 
 const Header: React.FC = () => {
-  const { getCurrentAccount, setCurrentAccount } = useContext(ApiContext)
-  const navigate = useNavigate()
+  const { getCurrentAccount } = useContext(ApiContext)
+  const logout = useLogout()
 
-  const logout = (): void => {
-    setCurrentAccount(null as unknown as Authentication.Model)
-    navigate('/login')
+  const handleLogout = (): void => {
+    logout()
   }
 
   return (
@@ -21,7 +19,7 @@ const Header: React.FC = () => {
         <Logo />
         <div className={Styles.infoWrap}>
           <span data-testid="username">{getCurrentAccount().name}</span>
-          <a data-testid="logout" href="#" onClick={logout}>Sair</a>
+          <a data-testid="logout" href="#" onClick={handleLogout}>Sair</a>
         </div>
       </div>
     </header>
