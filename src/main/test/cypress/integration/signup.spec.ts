@@ -1,8 +1,8 @@
 import faker from '@faker-js/faker'
 
-import * as Http from '../support/signup-mocks'
-import * as FormHelpers from '../support/form-helpers'
-import * as Helpers from '../support/helpers'
+import * as Http from '../utils/signup-mocks'
+import * as FormHelpers from '../utils/form-helpers'
+import * as Helpers from '../utils/helpers'
 
 const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName())

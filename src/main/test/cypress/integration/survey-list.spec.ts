@@ -1,7 +1,7 @@
 import faker from '@faker-js/faker'
 
-import * as Helpers from '../support/helpers'
-import * as Http from '../support/survey-list-mocks'
+import * as Helpers from '../utils/helpers'
+import * as Http from '../utils/survey-list-mocks'
 
 describe('Survey List', () => {
   beforeEach(() => {
