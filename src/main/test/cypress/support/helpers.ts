@@ -12,3 +12,7 @@ export const testLocalStorageItem = (item: string, error?: boolean): void => {
   const method = error ? 'isNull' : 'isOk'
   cy.window().then(w => assert[method](w.localStorage.getItem(item)))
 }
+
+export const setLocalStorageItem = (key: string, value: object): void => {
+  localStorage.setItem(key, JSON.stringify(value))
+}
