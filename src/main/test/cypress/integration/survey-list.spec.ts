@@ -1,3 +1,4 @@
+import SurveyList from '../fixtures/survey-list.json'
 import * as Helpers from '../utils/helpers'
 import * as Http from '../utils/http-mocks'
 
@@ -9,6 +10,10 @@ const mockUnexpectedError = (delay?: number): void => {
 
 const mockAccessDeniedError = (delay?: number): void => {
   Http.mockForbiddenError(path, 'GET', delay)
+}
+
+const mockSuccess = (delay?: number): void => {
+  Http.mockSuccess(path, 'GET', SurveyList, delay)
 }
 
 describe('Survey List', () => {
@@ -45,5 +50,33 @@ describe('Survey List', () => {
     cy.visit('/')
     cy.getByTestId('logout').click()
     Helpers.testUrl('/login')
+  })
+
+  it('Should present survey items', () => {
+    mockSuccess(50)
+    cy.visit('/')
+    cy.get('li:empty').should('have.length', 4)
+    cy.get('li:not(empty)').should('have.length', 2)
+    cy.get('li:nth-child(1)').then(li => {
+      assert.equal(li.find('[data-testid="day"]').text(), '23')
+      assert.equal(li.find('[data-testid="month"]').text(), 'jan')
+      assert.equal(li.find('[data-testid="year"]').text(), '2020')
+      assert.equal(li.find('[data-testid="question"]').text(), 'Question 1')
+      cy.fixture('icons').then(icons => {
+        assert.equal(li.find('[data-testid="icon"]').attr('src'), icons.thumbUp)
+      })
+    })
+    cy.get('li:nth-child(2)').then(li => {
+      assert.equal(li.find('[data-testid="day"]').text(), '05')
+      assert.equal(li.find('[data-testid="month"]').text(), 'fev')
+      assert.equal(li.find('[data-testid="year"]').text(), '2020')
+      assert.equal(li.find('[data-testid="question"]').text(), 'Question 2')
+      cy.fixture('icons').then(icons => {
+        assert.equal(
+          li.find('[data-testid="icon"]').attr('src'),
+          icons.thumbDown
+        )
+      })
+    })
   })
 })
