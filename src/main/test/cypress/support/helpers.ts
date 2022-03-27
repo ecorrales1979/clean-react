@@ -16,3 +16,8 @@ export const testLocalStorageItem = (item: string, error?: boolean): void => {
 export const setLocalStorageItem = (key: string, value: object): void => {
   localStorage.setItem(key, JSON.stringify(value))
 }
+
+export const getLocalStorageItem = (key: string): any => {
+  const value = localStorage.getItem(key)
+  return JSON.parse(value)
+}
