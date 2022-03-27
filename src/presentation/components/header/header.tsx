@@ -9,7 +9,8 @@ const Header: React.FC = () => {
   const { getCurrentAccount } = useContext(ApiContext)
   const logout = useLogout()
 
-  const handleLogout = (): void => {
+  const handleLogout = (ev: React.MouseEvent<HTMLAnchorElement>): void => {
+    ev.preventDefault()
     logout()
   }
 
@@ -19,7 +20,7 @@ const Header: React.FC = () => {
         <Logo />
         <div className={Styles.infoWrap}>
           <span data-testid="username">{getCurrentAccount().name}</span>
-          <a data-testid="logout" href="#" onClick={handleLogout}>Sair</a>
+          <a data-testid="logout" href="" onClick={handleLogout}>Sair</a>
         </div>
       </div>
     </header>
