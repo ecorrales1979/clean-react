@@ -1,8 +1,28 @@
 import faker from '@faker-js/faker'
 
-import * as Http from '../utils/login-mocks'
+import account from '../fixtures/account.json'
+import * as Http from '../utils/http-mocks'
 import * as FormHelpers from '../utils/form-helpers'
 import * as Helpers from '../utils/helpers'
+
+const path = /login/
+
+const mockInvalidCredentialsError = (delay?: number): void => {
+  Http.mockUnauthorizedError(path, delay)
+}
+
+const mockUnexpectedError = (delay?: number): void => {
+  Http.mockServerError(path, 'POST', delay)
+}
+
+const mockSuccess = (delay?: number): void => {
+  Http.mockSuccess(
+    path,
+    'POST',
+    account,
+    delay
+  )
+}
 
 const populateFields = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email())
@@ -47,7 +67,7 @@ describe('Login', () => {
   })
 
   it('Should present InvalidCredentialsError on 401', () => {
-    Http.mockInvalidCredentialsError(50)
+    mockInvalidCredentialsError(50)
     simulateValidSubmit()
     FormHelpers.testLoading()
     cy.wait('@request')
@@ -56,7 +76,7 @@ describe('Login', () => {
   })
 
   it('Should present UnexpectedError on 400', () => {
-    Http.mockUnexpectedError(50)
+    mockUnexpectedError(50)
     simulateValidSubmit()
     FormHelpers.testLoading()
     cy.wait('@request')
@@ -65,7 +85,8 @@ describe('Login', () => {
   })
 
   it('Should save account if valid credentials are provided', () => {
-    Http.mockSuccess(50)
+    mockSuccess(50)
+    Http.mockSuccess(/\//, 'GET', [])
     simulateValidSubmit()
     FormHelpers.testLoading()
     cy.wait('@request')
@@ -76,7 +97,7 @@ describe('Login', () => {
   })
 
   it('Should prevent multiple submits', () => {
-    Http.mockSuccess(50)
+    mockSuccess(50)
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').dblclick()
@@ -85,14 +106,14 @@ describe('Login', () => {
   })
 
   it('Should call submit if enter key is pressed', () => {
-    Http.mockSuccess(50)
+    mockSuccess(50)
     populateFields()
     cy.getByTestId('password').type('{enter}')
     Helpers.testHttpCallsCount(1)
   })
 
   it('Should prevent request to be called if form is invalid', () => {
-    Http.mockSuccess()
+    mockSuccess()
     cy.getByTestId('email').focus().type(faker.random.word())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5)).type('{enter}')
     Helpers.testHttpCallsCount(0)
