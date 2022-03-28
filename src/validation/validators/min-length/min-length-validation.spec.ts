@@ -24,8 +24,9 @@ describe('MinLengthValidation', () => {
   })
 
   it('Should return falsy if value is empty', () => {
-    const sut = makeSut(faker.database.column())
-    const error = sut.validate({ [faker.database.column()]: '' })
+    const field = faker.database.column()
+    const sut = makeSut(field)
+    const error = sut.validate({ [field]: '' })
     expect(error).toBeFalsy()
   })
 })
