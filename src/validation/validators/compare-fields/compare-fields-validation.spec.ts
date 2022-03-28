@@ -12,19 +12,19 @@ const makeSut = (
 
 describe('CompareFieldsValidation', () => {
   it('should return error if compare is invalid', () => {
-    const field = faker.database.column()
-    const fieldToCompare = faker.database.column()
+    const field = 'field1'
+    const fieldToCompare = 'field2'
     const sut = makeSut(field, fieldToCompare)
     const error = sut.validate({
-      [field]: faker.random.word(),
-      [fieldToCompare]: faker.random.words(4)
+      [field]: 'any_value',
+      [fieldToCompare]: 'other_value'
     })
     expect(error).toEqual(new InvalidFieldError(field))
   })
 
   it('Should return falsy if compare is valid', () => {
-    const field = faker.database.column()
-    const fieldToCompare = faker.database.column()
+    const field = 'field1'
+    const fieldToCompare = 'field2'
     const value = faker.random.word()
     const sut = makeSut(field, fieldToCompare)
     const error = sut.validate({
@@ -35,8 +35,8 @@ describe('CompareFieldsValidation', () => {
   })
 
   it('Should return falsy if field is empty', () => {
-    const field = faker.database.column()
-    const fieldToCompare = faker.database.column()
+    const field = 'field1'
+    const fieldToCompare = 'field2'
     const sut = makeSut(field, fieldToCompare)
     const error = sut.validate({
       [field]: '',
