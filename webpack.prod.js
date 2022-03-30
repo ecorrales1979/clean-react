@@ -1,5 +1,6 @@
 const { EnvironmentPlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { merge } = require('webpack-merge')
 
 const common = require('./webpack.common.js')
@@ -17,7 +18,7 @@ module.exports = merge(common, {
         test: /\.s[ac]ss$/i,
         use: [
           {
-            loader: 'style-loader'
+            loader: MiniCssExtractPlugin.loader,
           },
           {
             loader: 'css-loader',
@@ -44,6 +45,9 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './template.prod.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'main-bundle.[hash].css',
     })
   ]
 })
