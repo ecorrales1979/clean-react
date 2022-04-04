@@ -5,7 +5,6 @@ module.exports = {
   entry: './src/main/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/dist',
     filename: 'main-bundle-[hash].js'
   },
   resolve: {
