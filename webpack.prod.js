@@ -1,6 +1,7 @@
 const { EnvironmentPlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const { merge } = require('webpack-merge')
 
 const common = require('./webpack.common.js')
@@ -18,7 +19,7 @@ module.exports = merge(common, {
         test: /\.s[ac]ss$/i,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: MiniCssExtractPlugin.loader
           },
           {
             loader: 'css-loader',
@@ -49,7 +50,10 @@ module.exports = merge(common, {
       template: './template.prod.html'
     }),
     new MiniCssExtractPlugin({
-      filename: 'main-bundle.[hash].css',
+      filename: 'main-bundle.[hash].css'
+    }),
+    new FaviconsWebpackPlugin({
+      logo: './public/favicon.png'
     })
   ]
 })
