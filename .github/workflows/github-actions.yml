@@ -3,6 +3,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: cypress/browsers:node16.14.0-slim-chrome99-ff97
     steps:
       - uses: actions/checkout@v2
 
@@ -17,3 +18,8 @@ jobs:
 
       - name: Run tests
         run: yarn test:ci
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
